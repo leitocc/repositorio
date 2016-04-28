@@ -12,11 +12,11 @@ http://templates.arcsin.se/license/
 */
 
 
-//Aca esta lo agregado para los formularios
+/*Aca esta lo agregado para los formularios*/
 /* === Remove input autofocus webkit === */ 
-//*:focus { outline: none; } 
-/* === Form Typography === */ 
-//.contact_form h2, .contact_form label { font-family: Georgia, Times, "Times New Roman", serif; } 
+/*:focus { outline: none; } 
+ === Form Typography === */ 
+/*.contact_form h2, .contact_form label { font-family: Georgia, Times, "Times New Roman", serif; } 
 //.form_hint, .required_notification { font-size: 11px; }
 /* === List Styles === */
 .contact_form ul { /*width: 750px;*/ list-style-type: none; list-style-position: outside; margin: 0px; padding: 0px; } 
