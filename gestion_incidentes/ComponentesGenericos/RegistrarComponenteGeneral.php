@@ -12,20 +12,43 @@ require_once '../Conexion2.php';
         <title>Componentes</title>
         <link rel="stylesheet" type="text/css" href="/incidentes/css/estilo.css" />
         <script type="text/javascript" src="/incidentes/js/jquery-1.11.1.js"></script>
+        <script type="text/javascript" src="/incidentes/js/ajax.js"></script>
         <script>
-            $(document).ready(function () {
-            });
+            
+            function crea_query_string() {
+                var idTipoComponente = document.getElementById("tipoComponente");
+                
+                return "idTipoComponente=" + encodeURIComponent(idTipoComponente.value) + 
+                        "&nocache=" + Math.random();
+            }
+            
+            function procesaRespuesta() {
+                if (peticion_http.readyState == READY_STATE_COMPLETE) {
+                    if (peticion_http.status == 200) {
+                        document.getElementById("datos").innerHTML = peticion_http.responseText;
+                    }
+                }
+            }
+            function mostrarDatos(mievento){
+                mievento.preventDefault();
+                //history.back();
+                valida("http://localhost/incidentes/ComponentesGenericos/nuevoComponente.php");
+            };
+            window.onload = function() {
+                document.getElementById("siguiente").onclick = mostrarDatos;
+            };
+            
         </script>
     </head>
     <body id="top">
-<?php include_once '../master.php'; ?>
+        <?php include_once '../master.php'; ?>
         <div id="site">
             <div class="center-wrapper">
-<?php include_once '../menu.php'; ?>
+                <?php include_once '../menu.php'; ?>
 
                 <div class="main">
                     <div class="post">
-                        <form action="nuevoComponente.php" method="post" name="formulario" class="contact_form">
+                        <form action="InicioComponentesGenericos.php" method="post" name="formulario" class="contact_form">
                             <li class="no_lista"><h2>Registrar nuevo componente general</h2></li>
                             <h4>Tipo de componente</h4>
                             <div class="archive-separator"></div>
@@ -53,15 +76,16 @@ require_once '../Conexion2.php';
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <button name="siguiente" class="submit">Siguiente</button>
+                                            <button name="siguiente" id="siguiente" class="submit">Siguiente</button>
                                         </td>
                                     </tr>
                                 </table>
                             </div>
+                            <div id="datos"></div>
                         </form>
                     </div>
                 </div>
-<?php include_once '../foot.php'; ?>
+                <?php include_once '../foot.php'; ?>
             </div>
         </div>
     </body>
