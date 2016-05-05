@@ -26,6 +26,7 @@ require_once '../Conexion2.php';
                 if (peticion_http.readyState == READY_STATE_COMPLETE) {
                     if (peticion_http.status == 200) {
                         document.getElementById("datos").innerHTML = peticion_http.responseText;
+                        document.getElementById("buscar").setAttribute("hidden", true);
                     }
                 }
             }
@@ -52,7 +53,7 @@ require_once '../Conexion2.php';
                             <li class="no_lista"><h2>Registrar nuevo componente general</h2></li>
                             <h4>Tipo de componente</h4>
                             <div class="archive-separator"></div>
-                            <div style="width: 400px">
+                            <div style="width: 400px" id="buscar">
                                 <table>
                                     <tr>
                                         <td>Tipo de componente</td>
@@ -81,7 +82,7 @@ require_once '../Conexion2.php';
                                     </tr>
                                 </table>
                             </div>
-                            <div id="datos"></div>
+                            <div style="width: 600px" id="datos"></div>
                         </form>
                     </div>
                 </div>

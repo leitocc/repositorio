@@ -1,4 +1,5 @@
 <?php
+
 require_once '../Conexion2.php';
 $idTC = filter_input(INPUT_POST, "idTipoComponente");
 print '<div><table><tr>';
@@ -55,7 +56,7 @@ print '</tr>';
  */
 switch ($idTC) {
     case 1:
-        print '<tr><td>Tipo de conexion (*)</td><td>';
+        print '<tr><td>Tipo de conexion (*)</td>';
         $query = "select * from tipo_conexion";
         $resultado = $mysqli->query($query);
         print '<td><select name="conexion" id="conexion" required>';
@@ -67,7 +68,7 @@ switch ($idTC) {
         print '</select></td></tr>';
         $resultado->free();
         print '<tr><td>Medida (*)</td>';
-        print '<td><input type="text" id="medida" name="medida" required/> Pulgadas</td>';
+        print '<td><input type="text" id="medida" name="medida" required/>Pulgadas</td>';
         print '</tr>';
         break;
 
