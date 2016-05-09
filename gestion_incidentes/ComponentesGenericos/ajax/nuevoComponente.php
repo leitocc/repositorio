@@ -1,6 +1,6 @@
 <?php
 
-require_once '../Conexion2.php';
+require_once '../../Conexion2.php';
 $idTC = filter_input(INPUT_POST, "idTipoComponente");
 print '<div><table><tr>';
 print '<td>Marca:</td>';
@@ -36,7 +36,7 @@ print '<option value="12">Diciembre</option>';
 print '</select></td>';
 print '</tr><tr>';
 print '<td>Año adquisición</td>';
-print '<td><input id="anio" name="año" required/></td>';
+print '<td><input id="anio" name="anio" required/></td>';
 print '</tr><tr>';
 print '<td>Proveedor</td>';
 $query = "select * from proveedor";
