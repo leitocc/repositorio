@@ -9,7 +9,7 @@ $resultado = $mysqli->query($query);
 print '<td><select name="marca" id="marca" required>';
 print '<option value="" >Seleccione...</option>';
 while ($row = $resultado->fetch_assoc()) {
-    print "<option value =" . $row['id_tipo_componente'] . " >";
+    print "<option value =\"" . $row['id_marca'] . "\" >";
     print $row['descripcion'] . "</option>";
 }
 print '</select></td>';
@@ -37,8 +37,8 @@ print '</select></td>';
 print '</tr><tr>';
 print '<td>Año adquisición</td>';
 print '<td><input id="anio" name="anio" required/></td>';
-print '</tr><tr>';
-print '<td>Proveedor</td>';
+print '</tr>';
+/*print '<tr><td>Proveedor</td>';
 $query = "select * from proveedor";
 $resultado = $mysqli->query($query);
 print '<td><select name="proveedor" id="proveedor" required>';
@@ -47,9 +47,8 @@ while ($row = $resultado->fetch_assoc()) {
     print "<option value =" . $row['id_proveedor'] . " >";
     print $row['nombre'] . "</option>";
 }
-print '</select></td>';
-$resultado->free();
-print '</tr>';
+print '</select></td></tr>';
+$resultado->free();*/
 
 /*
  * Aqui se colocan los detalles especificos segun tipo componente

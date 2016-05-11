@@ -37,9 +37,15 @@ require_once '../Conexion2.php';
                 mievento.preventDefault();
                 valida("http://localhost/incidentes/ComponentesGenericos/ajax/nuevoComponente.php");
             }
+            
+            function mostrarDatos2(mievento) {
+                mievento.preventDefault();
+                valida("http://localhost/incidentes/ComponentesGenericos/ajax/asignarComponente.php");
+            }
 
             window.onload = function () {
                 document.getElementById("siguiente").onclick = mostrarDatos;
+                document.getElementById("siguiente2").onclick = mostrarDatos2;
             };
 
         </script>
@@ -86,6 +92,7 @@ require_once '../Conexion2.php';
                                 </table>
                             </div>
                             <div style="width: 600px" id="datos"></div>
+                            <div style="width: 600px" id="asignar"></div>
                         </form>
                     </div>
                 </div>
