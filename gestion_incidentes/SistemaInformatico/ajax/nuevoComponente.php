@@ -1,8 +1,8 @@
-<?php
 
+<?php
 require_once '../../Conexion2.php';
 $idTC = filter_input(INPUT_POST, "idTipoComponente");
-print '<div><table><tr>';
+print '<table><tr>';
 print '<td>Marca:</td>';
 $query = "select * from marca";
 $resultado = $mysqli->query($query);
@@ -38,17 +38,17 @@ print '</tr><tr>';
 print '<td>Año adquisición</td>';
 print '<td><input id="anio" name="anio" required/></td>';
 print '</tr>';
-/*print '<tr><td>Proveedor</td>';
-$query = "select * from proveedor";
-$resultado = $mysqli->query($query);
-print '<td><select name="proveedor" id="proveedor" required>';
-print '<option value="" >Seleccione...</option>';
-while ($row = $resultado->fetch_assoc()) {
-    print "<option value =" . $row['id_proveedor'] . " >";
-    print $row['nombre'] . "</option>";
-}
-print '</select></td></tr>';
-$resultado->free();*/
+/* print '<tr><td>Proveedor</td>';
+  $query = "select * from proveedor";
+  $resultado = $mysqli->query($query);
+  print '<td><select name="proveedor" id="proveedor" required>';
+  print '<option value="" >Seleccione...</option>';
+  while ($row = $resultado->fetch_assoc()) {
+  print "<option value =" . $row['id_proveedor'] . " >";
+  print $row['nombre'] . "</option>";
+  }
+  print '</select></td></tr>';
+  $resultado->free(); */
 
 /*
  * Aqui se colocan los detalles especificos segun tipo componente
@@ -71,11 +71,13 @@ switch ($idTC) {
         print '</tr>';
         break;
 
+    case 4:
+    case 8:
+    case 6:
     default:
         break;
 }
 
 print '</table>';
-print '<button class="submit" name="siguiente2" id="siguiente2">Siguiente</button><button class="submit" name="volver2" id="Volver2">Volver</button>';
-print '</div>';
-
+print '<button class="submit" name="siguiente2" id="siguiente2">Siguiente</button><button class="submit" name="volver2" id="volver2" onclick="location.assign(\'PrincipalSistemaInformatico.php\');">Volver</button>';
+//print '</div>';

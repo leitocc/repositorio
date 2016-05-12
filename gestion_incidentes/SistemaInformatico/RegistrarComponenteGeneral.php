@@ -13,7 +13,7 @@ require_once '../Conexion2.php';
         <link rel="stylesheet" type="text/css" href="/incidentes/css/estilo.css" />
         <script type="text/javascript" src="/incidentes/js/jquery-1.11.1.js"></script>
         <script type="text/javascript" src="/incidentes/js/ajax.js"></script>
-        <script>
+        <script type="text/javascript">
             function crea_query_string() {
                 var idTipoComponente = document.getElementById("tipoComponente");
                 return "idTipoComponente=" + encodeURIComponent(idTipoComponente.value) +
@@ -33,33 +33,21 @@ require_once '../Conexion2.php';
                 }
             }
 
-            function mostrarDatos(mievento) {
+            function volver(mievento) {
                 mievento.preventDefault();
-                valida("http://localhost/incidentes/SistemaInformatico/ajax/nuevoComponente.php");
-            }
-
-            function mostrarDatos2(mievento) {
-                mievento.preventDefault();
-                valida("http://localhost/incidentes/SistemaInformatico/ajax/asignarComponente.php");
+                location.assign('PrincipalSistemaInformatico.php');
             }
 
             window.onload = function () {
-                document.getElementById("siguiente").onclick = mostrarDatos;
-                document.getElementById("siguiente2").onclick = mostrarDatos2;
-                document.getElementById("volv").onclick = function (mievento) {
+                document.getElementById("siguiente").onclick = function (mievento) {
                     mievento.preventDefault();
-                    windows.location = 'incidentes/SistemaInformatico/PrincipalSistemaInformatico.php';
+                    if (document.getElementById("tipoComponente").value !== "") {
+                        valida("http://localhost/incidentes/SistemaInformatico/ajax/nuevoComponente.php");
+                    } else {
+                        alert("Ingrese un tipo de componente");
+                    }
                 };
-                document.getElementById("volver2").onclick = function (mievento) {
-                    mievento.preventDefault();
-                    document.getElementById("buscar").setAttribute("hidden", false);
-                    document.getElementById("datos").setAttribute("hidden", true);
-                };
-                document.getElementById("volver3").onclick = function (mievento) {
-                    mievento.preventDefault();
-                    document.getElementById("datos").setAttribute("hidden", false);
-                    document.getElementById("asignar").setAttribute("hidden", true);
-                };
+                document.getElementById("volver").onclick = volver;
             };
 
         </script>
@@ -72,42 +60,45 @@ require_once '../Conexion2.php';
 
                 <div class="main">
                     <div class="post">
-                        <form action="registrarNuevoCG.php" method="post" name="formulario" class="contact_form">
+                        <form action="AsignarComponente.php" method="post" name="formulario" class="contact_form">
                             <li class="no_lista"><h2>Registrar nuevo componente general</h2></li>
                             <h4>Tipo de componente</h4>
                             <div class="archive-separator"></div>
-                            <div style="width: 400px" id="buscar">
-                                <table>
-                                    <tr>
-                                        <td>Tipo de componente</td>
-                                        <td>
-                                            <?php
-                                            $query = "select * from tipo_componente";
-                                            $resultado = $mysqli->query($query);
-                                            $aux = "<select name='tipoComponente' id='tipoComponente' required>";
-                                            $aux.= "<option value=''>Seleccione...</option>";
-                                            print($aux);
-                                            while ($row = $resultado->fetch_assoc()) {
-                                                $aux = "<option value =" . $row['id_tipo_componente'] . " >";
-                                                $aux.= $row['descripcion'] . "</option>";
+                            <div style="width: 800px" id="buscar">
+                                <div style="width: 400px">
+                                    <table>
+                                        <tr>
+                                            <td>Tipo de componente</td>
+                                            <td>
+                                                <?php
+                                                $query = "select * from tipo_componente";
+                                                $resultado = $mysqli->query($query);
+                                                $aux = "<select name='tipoComponente' id='tipoComponente' required>";
+                                                $aux.= "<option value=''>Seleccione...</option>";
                                                 print($aux);
-                                                $aux = "";
-                                            }
-                                            print '</select>';
-                                            $resultado->free();
-                                            ?>
-                                        </td>
-                                    </tr>
+                                                while ($row = $resultado->fetch_assoc()) {
+                                                    $aux = "<option value =" . $row['id_tipo_componente'] . " >";
+                                                    $aux.= $row['descripcion'] . "</option>";
+                                                    print($aux);
+                                                    $aux = "";
+                                                }
+                                                print '</select>';
+                                                $resultado->free();
+                                                ?>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <table>
                                     <tr>
                                         <td colspan="2">
                                             <button name="siguiente" id="siguiente" class="submit">Siguiente</button>
                                             <button name="volver" id="volver" class="submit">Volver</button>
                                         </td>
                                     </tr>
-                                </table>
+                                </table>    
                             </div>
                             <div style="width: 600px" id="datos"></div>
-                            <div style="width: 600px" id="asignar"></div>
                         </form>
                     </div>
                 </div>
