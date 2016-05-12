@@ -76,6 +76,6 @@ switch ($idTC) {
 }
 
 print '</table>';
-print '<button class="submit" name="Registrar">Registrar</button><button class="submit" name="volver" id="Volver">Volver</button>';
+print '<button class="submit" name="siguiente2" id="siguiente2">Siguiente</button><button class="submit" name="volver2" id="Volver2">Volver</button>';
 print '</div>';
 

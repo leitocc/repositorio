@@ -24,6 +24,7 @@ include_once '../limpiarSesion.php';
                             <li class="no_lista"><h3><a href="AltaSistemaInformatico.php">Agregar Sistema Informático</a></h3></li>
                             <li class="no_lista"><h3><a href="ModificarSisitemaInformatico.php">Modificar Sistema Informático</a></h3></li>
                             <li class="no_lista"><h3><a href="BajaSistemaInformatico.php">Dar de baja Sistema Informatico</a></h3></li>
+                            <li class="no_lista"><h3><a href="RegistrarComponenteGeneral.php">Asignar componente a varios SI</a></h3></li>
                             <li class="no_lista"><h3><a href="PaginaConsultarSI.php"> Consultar SI </a></h3></li>
                             <li class="no_lista"><h3><a href="PaginaConsultaHistorial.php?param=1">Consultar Historico SI</a></h3></li>
                         </div>

@@ -35,17 +35,31 @@ require_once '../Conexion2.php';
 
             function mostrarDatos(mievento) {
                 mievento.preventDefault();
-                valida("http://localhost/incidentes/ComponentesGenericos/ajax/nuevoComponente.php");
+                valida("http://localhost/incidentes/SistemaInformatico/ajax/nuevoComponente.php");
             }
-            
+
             function mostrarDatos2(mievento) {
                 mievento.preventDefault();
-                valida("http://localhost/incidentes/ComponentesGenericos/ajax/asignarComponente.php");
+                valida("http://localhost/incidentes/SistemaInformatico/ajax/asignarComponente.php");
             }
 
             window.onload = function () {
                 document.getElementById("siguiente").onclick = mostrarDatos;
                 document.getElementById("siguiente2").onclick = mostrarDatos2;
+                document.getElementById("volv").onclick = function (mievento) {
+                    mievento.preventDefault();
+                    windows.location = 'incidentes/SistemaInformatico/PrincipalSistemaInformatico.php';
+                };
+                document.getElementById("volver2").onclick = function (mievento) {
+                    mievento.preventDefault();
+                    document.getElementById("buscar").setAttribute("hidden", false);
+                    document.getElementById("datos").setAttribute("hidden", true);
+                };
+                document.getElementById("volver3").onclick = function (mievento) {
+                    mievento.preventDefault();
+                    document.getElementById("datos").setAttribute("hidden", false);
+                    document.getElementById("asignar").setAttribute("hidden", true);
+                };
             };
 
         </script>
@@ -87,6 +101,7 @@ require_once '../Conexion2.php';
                                     <tr>
                                         <td colspan="2">
                                             <button name="siguiente" id="siguiente" class="submit">Siguiente</button>
+                                            <button name="volver" id="volver" class="submit">Volver</button>
                                         </td>
                                     </tr>
                                 </table>
