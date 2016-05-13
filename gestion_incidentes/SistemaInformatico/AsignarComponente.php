@@ -5,6 +5,15 @@ $_SESSION['permisos'] = $permisos;
 include_once '../verificarPermisos.php';
 include_once '../limpiarSesion.php';
 require_once '../Conexion2.php';
+
+$marca = filter_input(INPUT_POST, "marca");
+$modelo = filter_input(INPUT_POST, "modelo");
+$mes = filter_input(INPUT_POST, "mes");
+$anio = filter_input(INPUT_POST, "anio");
+$proveedor = filter_input(INPUT_POST, "proveedor");
+
+
+
 ?>
 <html>
     <head>
