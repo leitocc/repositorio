@@ -32,7 +32,7 @@ require_once '../Conexion2.php';
                     }
                 }
             }
-
+ //
             function volver(mievento) {
                 mievento.preventDefault();
                 location.assign('PrincipalSistemaInformatico.php');
