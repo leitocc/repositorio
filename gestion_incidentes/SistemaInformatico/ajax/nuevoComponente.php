@@ -1,5 +1,6 @@
 
 <?php
+
 require_once '../../Conexion2.php';
 $idTC = filter_input(INPUT_POST, "idTipoComponente");
 print '<table><tr>';
@@ -55,6 +56,7 @@ print '</tr>';
  */
 switch ($idTC) {
     case 1:
+        //monitor
         print '<tr><td>Tipo de conexion (*)</td>';
         $query = "select * from tipo_conexion";
         $resultado = $mysqli->query($query);
@@ -70,10 +72,114 @@ switch ($idTC) {
         print '<td><input type="text" id="medida" name="medida" required/>Pulgadas</td>';
         print '</tr>';
         break;
-
-    case 4:
-    case 8:
+    case 2:
+        //mouse
+        print '<tr><td>Tipo de conexion (*)</td>';
+        $query = "select * from tipo_conexion";
+        $resultado = $mysqli->query($query);
+        print '<td><select name="conexion" id="conexion" required>';
+        print '<option value="" >Seleccione...</option>';
+        while ($row = $resultado->fetch_assoc()) {
+            print "<option value =" . $row['id_tipo_conexion'] . " >";
+            print strtoupper($row['nombre']) . "</option>";
+        }
+        print '</select></td></tr>';
+        $resultado->free();
+        break;
+    //tecldo
+        case 3:
+          print '<tr><td>Tipo de conexion (*)</td>';
+        $query = "select * from tipo_conexion";
+        $resultado = $mysqli->query($query);
+        print '<td><select name="conexion" id="conexion" required>';
+        print '<option value="" >Seleccione...</option>';
+        while ($row = $resultado->fetch_assoc()) {
+            print "<option value =" . $row['id_tipo_conexion'] . " >";
+            print strtoupper($row['nombre']) . "</option>";
+        }
+        print '</select></td></tr>';
+        $resultado->free();
+        break;
+    //Memoria RAM
+    case 5:
+        print '<tr><td>Tipo de memoria (*)</td>';
+        $query = "select * from tipo_memoria";
+        $resultado = $mysqli->query($query);
+        print '<td><select name="tipo_memoria" id="tipoMemoria" required>';
+        print '<option value="" >Seleccione...</option>';
+        while ($row = $resultado->fetch_assoc()) {
+            print "<option value =" . $row['id_tipo_memoria'] . " >";
+            print strtoupper($row['nombre']) . "</option>";
+        }
+        print '</select></td></tr>';
+        $resultado->free();
+        print '<tr><td>Capacidad</td>';
+        print '<td><input type="text" id="Capacidad" name="Capacidad" required/>Gb</td>';
+        print '</tr>';
+        print '<tr><td>Frecuencia</td>';
+        print '<td><input type="text" id="Frecuencia" name="Frecuencia" required/>Mhz</td>';
+        print '</tr>';
+        break;
+    //Disco Duro
     case 6:
+        print '<tr><td>Tipo de conexion (*)</td>';
+        $query = "select * from tipo_conexion";
+        $resultado = $mysqli->query($query);
+        print '<td><select name="conexion" id="conexion" required>';
+        print '<option value="" >Seleccione...</option>';
+        while ($row = $resultado->fetch_assoc()) {
+            print "<option value =" . $row['id_tipo_conexion'] . " >";
+            print strtoupper($row['nombre']) . "</option>";
+        }
+        print '</select></td></tr>';
+        $resultado->free();
+        print '<tr><td>Velocidad de transferencia(*)</td>';
+        print '<td><input type="text" id="velTransferencia" required/>Rpm</td>';
+        print'</tr>';
+        break;
+    //placa de video
+    case 8:
+        print '<tr><td>Capacidad de memoria</td>';
+        print '<td><input type="text" id="capacidadMemoria" name="capacidadMemoria" required/>Frecuencia</td>MB';
+        print'</tr>';
+        break;
+    //Placa Red
+    case 9:
+        print '<tr><td>Mac</td>';
+        print '<td><input type="text" id="Mac" name="Mac" required/></td>MB';
+        print'</tr>';
+        break;
+    //Placa Audio
+            
+    
+    //lectora    
+    case 11: 
+        print '<tr><td>Tipo de Lectora (*)</td>';
+        $query = "select * from tipo_lectora";
+        $resultado = $mysqli->query($query);
+        print '<td><select name="tipo_lectora" id="tipoLectora" required>';
+        print '<option value="" >Seleccione...</option>';
+        while ($row = $resultado->fetch_assoc()) {
+            print "<option value =" . $row['id_tipo_lectora'] . " >";
+            print strtoupper($row['nombre']) . "</option>";
+        }
+        print '</select></td></tr>';
+        $resultado->free();
+        break;
+    //MicroProcesador    
+    case 13:
+        print '<tr><td>Cantidad  De Nucleo</td>';
+        print '<td><input type="text" id="cantNucleo" name="cantNucleo" required/></td>';
+        print'</tr>';
+        print '<tr><td>Velocidad</td>';
+        print '<td><input type="text" id="velocidad" name="Velocidad" required/> Ghz</td>';
+        print'</tr>';
+        break;
+    //fuente
+    case 14:
+        print '<tr><td>Potencia</td>';
+        print '<td><input type="text" id="potencia" name="potencia" required/>Watts</td>MB';
+        print'</tr>';
     default:
         break;
 }
