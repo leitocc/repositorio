@@ -12,6 +12,16 @@ $mes = filter_input(INPUT_POST, "mes");
 $anio = filter_input(INPUT_POST, "anio");
 $proveedor = filter_input(INPUT_POST, "proveedor");
 
+$idTipoComponente = filter_input(INPUT_POST, "idTipoComponente");
+
+switch ($idTipoComponente){
+    case 1:
+        break;
+    case 2:
+        break;
+    default:
+        break;
+}
 
 
 ?>
