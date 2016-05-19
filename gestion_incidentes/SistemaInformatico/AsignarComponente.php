@@ -39,7 +39,114 @@ switch ($idTipoComponente) {
         $vectorDetalles[] = $detalle;
         break;
     case 2:
+        $conexion = filter_input(INPUT_POST, "conexion");
+        $detalle->__constructor();
+        $detalle->setId_descripcion(3);
+        $detalle->setValor(NULL);
+        $detalle->setValor_alfanumerico($conexion);
+        $detalle->setId_unidad_medida(NULL);
+        $vectorDetalles[] = $detalle;
         break;
+    case 3:
+        $conexion = filter_input(INPUT_POST, "conexion");
+        $detalle->__constructor();
+        $detalle->setId_descripcion(3);
+        $detalle->setValor(NULL);
+        $detalle->setValor_alfanumerico($conexion);
+        $detalle->setId_unidad_medida(NULL);
+        $vectorDetalles[] = $detalle;
+        break;
+    case 5:
+        $tipoMemoria = filter_input(INPUT_POST, "tipoMemoria");
+        $detalle->__constructor();
+        $detalle->setId_descripcion(4);
+        $detalle->setValor(NULL);
+        $detalle->setValor_alfanumerico($tipoMemoria);
+        $detalle->setId_unidad_medida(NULL);
+        $vectorDetalles[] = $detalle;
+
+        $capacidad = filter_input(INPUT_POST, "capacidad");
+        $detalle->__constructor();
+        $detalle->setId_descripcion(2);
+        $detalle->setValor(capacidad);
+        $detalle->setValor_alfanumerico(null);
+        $detalle->setId_unidad_medida(3);
+        $vectorDetalles[] = $detalle;
+
+        $frecuencia = filter_input(INPUT_POST, "frecuencia");
+        $detalle->__constructor();
+        $detalle->setId_descripcion(12);
+        $detalle->setValor($frecuencia);
+        $detalle->setValor_alfanumerico(null);
+        $detalle->setId_unidad_medida(1);
+        $vectorDetalles[] = $detalle;
+        break;
+    //discoDuro
+    case 6:
+        $conexion = filter_input(INPUT_POST, "conexion");
+        $detalle->__constructor();
+        $detalle->setId_descripcion(3);
+        $detalle->setValor(NULL);
+        $detalle->setValor_alfanumerico($conexion);
+        $detalle->setId_unidad_medida(NULL);
+        $vectorDetalles[] = $detalle;
+
+        $velocidadTransferencia = filter_input(INPUT_POST, "velTransferencia");
+        $detalle->__constructor();
+        $detalle->setId_descripcion(1);
+        $detalle->setValor($velocidadTransferencia);
+        $detalle->setValor_alfanumerico(NULL);
+        $detalle->setId_unidad_medida(8);
+        $vectorDetalles[] = $detalle;
+        break;
+    case 8:
+        $capacidadMemoria = filter_input(INPUT_POST, "capacidadMemoria");
+        $detalle->__constructor();
+        $detalle->setId_descripcion(2);
+        $detalle->setValor($capacidadMemoria);
+        $detalle->setValor_alfanumerico(NULL);
+        $detalle->setId_unidad_medida(4);
+        break;
+    case 9:
+        $mac = filter_input(INPUT_POST, "mac");
+        $detalle->__constructor();
+        $detalle->setId_descripcion(10);
+        $detalle->setValor(NULL);
+        $detalle->setValor_alfanumerico($mac);
+        $detalle->setId_unidad_medida(NULL);
+        break;
+    case 11:
+        $tipoLectora = filter_input(INPUT_POST, "tipoLectora");
+        $detalle->__constructor();
+        $detalle->setId_descripcion(8);
+        $detalle->setValor(NULL);
+        $detalle->setValor_alfanumerico($tipoLectora);
+        $detalle->setId_unidad_medida(NULL);
+        break;
+    case 13:
+        $cantidadNucleo = filter_input(INPUT_POST, "cantNucleo");
+        $detalle->__constructor();
+        $detalle->setId_descripcion(6);
+        $detalle->setValor($cantidadNucleo);
+        $detalle->setValor_alfanumerico(NULL);
+        $detalle->setId_unidad_medida(NULL);
+
+        $velocidadProcesamiento = filter_input(INPUT_POST, "velocidad");
+        $detalle->__constructor();
+        $detalle->setId_descripcion(7);
+        $detalle->setValor($velocidadProcesamiento);
+        $detalle->setValor_alfanumerico(NULL);
+        $detalle->setId_unidad_medida(2);
+        break;
+    case 14:
+        $potencia = filter_input(INPUT_POST, "potencia");
+        $detalle->__constructor();
+        $detalle->setId_descripcion(10);
+        $detalle->setValor($potencia);
+        $detalle->setValor_alfanumerico(NULL);
+        $detalle->setId_unidad_medida(10);
+        break;
+
     default:
         break;
 }
@@ -64,10 +171,8 @@ print sizeof($vectorDetalles, TRUE) . "\n";
                         document.getElementById('sistemaInformatico').innerHTML = "";
                     }
                 };
-                document.getElementById("volver3").onclick = function (mievento) {
+                document.getElementById("volver").onclick = function (mievento) {
                     mievento.preventDefault();
-                    document.getElementById("datos").setAttribute("hidden", false);
-                    document.getElementById("asignar").setAttribute("hidden", true);
                 };
             }
 
@@ -87,10 +192,10 @@ print sizeof($vectorDetalles, TRUE) . "\n";
         </script>
     </head>
     <body id="top">
-<?php include_once '../master.php'; ?>
+        <?php include_once '../master.php'; ?>
         <div id="site">
             <div class="center-wrapper">
-<?php include_once '../menu.php'; ?>
+                <?php include_once '../menu.php'; ?>
 
                 <div class="main">
                     <div class="post">
@@ -98,22 +203,22 @@ print sizeof($vectorDetalles, TRUE) . "\n";
                             <li class="no_lista"><h2>Asignar componente general</h2></li>
                             <h4>Seleccionar aula</h4>
                             <div class="archive-separator"></div>
-<?php
-require_once '../../Conexion2.php';
-print '<table><tr>';
-print '<td>Seleccione un aula:</td>';
-$query = "select * from sala";
-$resultado = $mysqli->query($query);
-print '<td><select name="sala" id="sala" required>';
-print '<option value="" >Seleccione...</option>';
-while ($row = $resultado->fetch_assoc()) {
-    print "<option value =\"" . $row['id_sala'] . "\" >";
-    print $row['nombre'] . "</option>";
-}
-print '</select></td>';
-$resultado->free();
-print '</tabla>';
-?>
+                            <?php
+                            require_once '../../Conexion2.php';
+                            print '<table><tr>';
+                            print '<td>Seleccione un aula:</td>';
+                            $query = "select * from sala";
+                            $resultado = $mysqli->query($query);
+                            print '<td><select name="sala" id="sala" required>';
+                            print '<option value="" >Seleccione...</option>';
+                            while ($row = $resultado->fetch_assoc()) {
+                                print "<option value =\"" . $row['id_sala'] . "\" >";
+                                print $row['nombre'] . "</option>";
+                            }
+                            print '</select></td>';
+                            $resultado->free();
+                            print '</tabla>';
+                            ?>
 
                             <?php
                             print '<div id="sistemaInformatico" > ';
@@ -123,7 +228,7 @@ print '</tabla>';
                         </form>
                     </div>
                 </div>
-<?php include_once '../foot.php'; ?>
+                <?php include_once '../foot.php'; ?>
             </div>
         </div>
     </body>

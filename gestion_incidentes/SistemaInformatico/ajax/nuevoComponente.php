@@ -86,7 +86,7 @@ switch ($idTC) {
         print '</select></td></tr>';
         $resultado->free();
         break;
-    //tecldo
+    //teclado
         case 3:
           print '<tr><td>Tipo de conexion (*)</td>';
         $query = "select * from tipo_conexion";
@@ -114,10 +114,10 @@ switch ($idTC) {
         print '</select></td></tr>';
         $resultado->free();
         print '<tr><td>Capacidad</td>';
-        print '<td><input type="text" id="Capacidad" name="Capacidad" required/>Gb</td>';
+        print '<td><input type="text" id="capacidad" name="capacidad" required/>Gb</td>';
         print '</tr>';
         print '<tr><td>Frecuencia</td>';
-        print '<td><input type="text" id="Frecuencia" name="Frecuencia" required/>Mhz</td>';
+        print '<td><input type="text" id="frecuencia" name="frecuencia" required/>Mhz</td>';
         print '</tr>';
         break;
     //Disco Duro
@@ -140,13 +140,13 @@ switch ($idTC) {
     //placa de video
     case 8:
         print '<tr><td>Capacidad de memoria</td>';
-        print '<td><input type="text" id="capacidadMemoria" name="capacidadMemoria" required/>Frecuencia</td>MB';
+        print '<td><input type="text" id="capacidadMemoria" name="capacidadMemoria" required/>MB</td>';
         print'</tr>';
         break;
     //Placa Red
     case 9:
         print '<tr><td>Mac</td>';
-        print '<td><input type="text" id="Mac" name="Mac" required/></td>MB';
+        print '<td><input type="text" id="mac" name="mac" required/></td>';
         print'</tr>';
         break;
     //Placa Audio
