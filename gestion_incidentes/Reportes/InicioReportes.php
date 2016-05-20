@@ -21,7 +21,7 @@ include_once '../limpiarSesion.php';
                     <div class="post">
                         <div style="clear: both">
                             <li class="no_lista"><h2>Reportes</h2></li>
-                            <li class="no_lista"><h3><a href="ReporteIncidentesPorSI.php">Reporte Incidentes por Sistema Informático</a></h3></li>
+                            <li class="no_lista"><h3><a href="ReporteIncidentesPorComponente.php">Reporte Incidentes por componente afectado</a></h3></li>
                             <li class="no_lista"><h3><a href="PaginaConsultarSI.php"> Reporte Consultar Sistema Informático</a></h3></li>
                             <li class="no_lista"><h3><a href="PaginaConsultaHistorial.php?param=1">Reporte Consultar Historico Sistema Informático</a></h3></li>
                         </div>

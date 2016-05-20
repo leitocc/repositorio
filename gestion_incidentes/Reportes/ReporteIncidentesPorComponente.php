@@ -58,7 +58,7 @@ include_once '../verificarPermisos.php';
 
                 <div class="main">
                     <div class="post">
-                        <form name="formulario" id="formulario" action="ResultadosIncidentesPorSI.php" method="post" class="contact_form">
+                        <form name="formulario" id="formulario" action="ResultadosIncidentesPorComponente.php" method="post" class="contact_form">
                             <?php
                             require_once '../Conexion2.php';
                             ?>
