@@ -13,19 +13,29 @@ require_once '../Conexion2.php';
         <meta charset="UTF-8">
         <title>Sistemas Informaticos - Consultar</title>
         <link rel="stylesheet" type="text/css" href="/incidentes/css/estilo.css"/>
-        <script type="text/javascript" src="/incidentes/js/ajax.js"></script>
+        <!--<script type="text/javascript" src="/incidentes/js/ajax.js"></script>-->
         <script type="text/javascript">
-            window.onload = function () {
-                document.getElementById("tipoComponente").onchange = function (e) {
-                    var tipoComponente = document.getElementById("tipoComponente").value;
-                    if (tipoComponente !== "") {
-                        alert(""+tipoComponente);
-                        valida("http://localhost/incidentes/Reportes/ajax/listarIncidentesPorComponente.php");
-                    } else {
-                        alert("Ingrese un tipo de componente");
-                    }
-                };
-            };
+            var READY_STATE_COMPLETE = 4;
+            var peticion_http = null;
+
+            function inicializa_xhr() {
+                if (window.XMLHttpRequest) {
+                    return new XMLHttpRequest();
+                } else if (window.ActiveXObject) {
+                    return new ActiveXObject("Microsoft.XMLHTTP");
+                }
+            }
+
+            function valida(url) {
+                peticion_http = inicializa_xhr();
+                if (peticion_http) {
+                    peticion_http.onreadystatechange = procesaRespuesta;
+                    peticion_http.open("POST", url, true);
+                    peticion_http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    var query_string = crea_query_string();
+                    peticion_http.send(query_string);
+                }
+            }
             function crea_query_string() {
                 var idTipoComponente = document.getElementById("tipoComponente");
                 return "idTipoComponente=" + encodeURIComponent(idTipoComponente.value) +
@@ -34,12 +44,23 @@ require_once '../Conexion2.php';
             }
 
             function procesaRespuesta() {
-                if (peticion_http.readyState === READY_STATE_COMPLETE) {
-                    if (peticion_http.status === 200) {
+                if (peticion_http.readyState == READY_STATE_COMPLETE) {
+                    if (peticion_http.status == 200) {
+                        //document.getElementById("datos").innerHTML = "<p> HOLA!!! </p>";
                         document.getElementById("datos").innerHTML = peticion_http.responseText;
                     }
                 }
             }
+            window.onload = function () {
+                document.getElementById("tipoComponente").onchange = function (e) {
+                    var tipoComponente = document.getElementById("tipoComponente").value;
+                    if (tipoComponente !== "") {
+                        valida("http://localhost/incidentes/Reportes/ajax/listarIncidentesPorComponente.php");
+                    } else {
+                        alert("Ingrese un tipo de componente");
+                    }
+                };
+            };
         </script>
     </head>
     <body id="top">
@@ -50,7 +71,7 @@ require_once '../Conexion2.php';
 
                 <div class="main">
                     <div class="post">
-                        <form name="formulario" id="formulario" action="#" method="post" class="contact_form">
+                        <form name="formulario" id="formulario" action="InicioReportes.php" method="post" class="contact_form">
                             <?php ?>
                             <li><h2>Reporte Incidentes por componente afectado</h2></li>
                             <li><h3>Incidentes que afectaron el Sistema Informatico: <?php echo $si ?></h3></li>
@@ -62,7 +83,7 @@ require_once '../Conexion2.php';
                                         <?php
                                         $query = "select * from tipo_componente";
                                         $resultado = $mysqli->query($query);
-                                        $aux = "<select name='tipoComponente' id='tipoComponente' required>";
+                                        $aux = "<select name='tipoComponente' id='tipoComponente'>";
                                         $aux.= "<option value=''>Seleccione...</option>";
                                         print($aux);
                                         while ($row = $resultado->fetch_assoc()) {
