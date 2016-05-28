@@ -1,29 +1,29 @@
+<?php
+$idSala = filter_input(INPUT_POST, "idSala");
+require_once '../../Conexion2.php';
+?>
 <br/>
 <br/>
 <h5>Seleccione los SI que desee asignar el componente general:</h5>
 <br/>
 <br/>
-<div style="height: 50px; width: 750px; font-size: 2em;">
-    <div style="float: left; height: 30px"><input type="checkbox" name="si101" id="si101" value="101" class="componentes"/>
-        <label for="si101">101</label><br/></div>
-    <div style="float: left; height: 30px"><input type="checkbox" name="si102" id="si102" value="102" class="componentes"/>
-        <label for="si102">102</label><br/></div>
-    <div style="float: left; height: 30px"><input type="checkbox" name="si103" id="si103" value="103" class="componentes"/>
-        <label for="si103">103</label><br/></div>
-    <div style="float: left; height: 30px"><input type="checkbox" name="si104" id="si104" value="104" class="componentes"/>
-        <label for="si104">104</label><br/></div>
-    <div style="float: left; height: 30px"><input type="checkbox" name="si105" id="si105" value="105" class="componentes"/>
-        <label for="si105">105</label><br/></div>
-    <div style="float: left; height: 30px"><input type="checkbox" name="si101" id="si101" value="106" class="componentes"/>
-        <label for="si101">106</label><br/></div>
-    <div style="float: left; height: 30px"><input type="checkbox" name="si102" id="si102" value="107" class="componentes"/>
-        <label for="si102">107</label><br/></div>
-    <div style="float: left; height: 30px"><input type="checkbox" name="si103" id="si103" value="108" class="componentes"/>
-        <label for="si103">108</label><br/></div>
-    <div style="float: left; height: 30px"><input type="checkbox" name="si104" id="si104" value="109" class="componentes"/>
-        <label for="si104">109</label><br/></div>
-    <div style="float: left; height: 30px"><input type="checkbox" name="si105" id="si105" value="110" class="componentes"/>
-        <label for="si105">110</label><br/></div>
-</div>
+
+<fieldset><legend>Componente</legend>
+    <div style="float: left; width: 750px">
+        <?php
+        $query = "SELECT SI.id_sistema_informatico AS ISI FROM Sistema_Informatico SI where SI.id_Sala = " . $idSala;
+        $resultado = $mysqli->query($query);
+        while ($row = $resultado->fetch_assoc()) {
+            ?>
+            <div style="float: left; height: 30px">
+                <input type="checkbox" name="SI<?php echo $row['ISI']; ?>" class="componentes" value="<?php echo $row['ISI'] ?>" id="SI<?php echo $row['ISI'] ?>">
+                <label for="SI<?php echo $row['ISI'] ?>"> <?php echo $row['ISI'] ?> </label>
+            </div>  
+            <?php
+        }
+        ?>
+        <div><button class="submitComponente" align="left" type="button" name="agregarSistemaInformatico" id="agregarSI">Agregar Sistema Informatico</button></div>
+        <label for="todos">Seleccionar todos</label><br/><br/><br/>
+</fieldset>
 <input type="checkbox" name="todos" id="todos" value="Seleccionar todos"/>
-<label for="todos">Seleccionar todos</label><br/><br/><br/>
+

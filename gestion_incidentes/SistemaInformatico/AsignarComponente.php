@@ -3,9 +3,12 @@ session_start();
 $permisos = array("6", "1");
 $_SESSION['permisos'] = $permisos;
 include_once '../verificarPermisos.php';
-include_once '../limpiarSesion.php';
 require_once '../Conexion2.php';
+include_once '../limpiarSesion.php';
 require_once '../DetalleComponente.class.php';
+
+//Falta crear una variable en la sesion que guarde los atributos del componente(marca, modelo....)
+require_once '../Componente.class.php';
 
 $marca = filter_input(INPUT_POST, "marca");
 $modelo = filter_input(INPUT_POST, "modelo");
@@ -152,7 +155,6 @@ switch ($idTipoComponente) {
 }
 
 $_SESSION['Detalles'] = $vectorDetalles;
-print sizeof($vectorDetalles, TRUE) . "\n";
 ?>
 <html>
     <head>
@@ -162,8 +164,9 @@ print sizeof($vectorDetalles, TRUE) . "\n";
         <script type="text/javascript" src="/incidentes/js/ajax.js"></script>
 
         <script type="text/javascript">
-            windows.onload = function () {
-                document.getElementById("sala").onchange = function () {
+            
+            window.onload = function () {
+                document.getElementById("sala").onchange = function (e) {
                     var nrosala = document.getElementById('sala').value;
                     if (nrosala !== "") {
                         valida("http://localhost/incidentes/SistemaInformatico/ajax/mostrarSala.php");
@@ -174,7 +177,7 @@ print sizeof($vectorDetalles, TRUE) . "\n";
                 document.getElementById("volver").onclick = function (mievento) {
                     mievento.preventDefault();
                 };
-            }
+            };
 
 
             function procesaRespuesta() {
@@ -204,8 +207,8 @@ print sizeof($vectorDetalles, TRUE) . "\n";
                             <h4>Seleccionar aula</h4>
                             <div class="archive-separator"></div>
                             <?php
-                            require_once '../../Conexion2.php';
-                            print '<table><tr>';
+                            require_once '../Conexion2.php';
+                            print '<div><table><tr>';
                             print '<td>Seleccione un aula:</td>';
                             $query = "select * from sala";
                             $resultado = $mysqli->query($query);
@@ -217,12 +220,8 @@ print sizeof($vectorDetalles, TRUE) . "\n";
                             }
                             print '</select></td>';
                             $resultado->free();
-                            print '</tabla>';
-                            ?>
-
-                            <?php
-                            print '<div id="sistemaInformatico" > ';
-                            print '</div>';
+                            print '</tr></table></div>';
+                            print '<div id="sistemaInformatico"></div>';
                             print '<button class="submit" name="asignar" id="asignar">Asignar</button><button class="submit" name="volver" id="Volver">Volver</button>';
                             ?>
                         </form>

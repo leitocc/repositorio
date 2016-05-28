@@ -2,10 +2,15 @@
 
 require_once '../DetalleComponente.class.php';
 session_start();
+$vectorDetalles = $_SESSION['Detalles'];
+//Falta recuperar la variable de sesion del componente
 try {
     $mensaje = "";
     require_once '../Conexion2.php';
-    $idTipoComponente = filter_input(INPUT_POST, "tipoComponente");
+
+    //Aqui realizar los input de la pagina asignarcomponente.php
+    //Serian las maquinas y el aula a asignar el componente
+    //$idTipoComponente = filter_input(INPUT_POST, "tipoComponente");
 
     $marca = filter_input(INPUT_POST, "marca");
     $modelo = filter_input(INPUT_POST, "modelo");
@@ -13,63 +18,40 @@ try {
     $anio = filter_input(INPUT_POST, "anio");
     $proveedor = filter_input(INPUT_POST, "proveedor");
 
-    //$mysqli->autocommit(TRUE);
-    $query1 = "INSERT INTO `gestion_incidentes`.`componente_general` (`id_tipo_componente_general`,`descripcion`,`id_marca`) VALUES (" + $idTipoComponente + ",\"" + $modelo + "\"," + $marca + ")";
+    //Esto es para una transaccion
+    $mysqli->autocommit(FALSE);
+
+    //Aqui primero tenes que guardar
+    $query1 = "INSERT INTO `gestion_incidentes`.`componente` (`id_tipo_componente_general`,`descripcion`,`id_marca`) VALUES (" + $idTipoComponente + ",\"" + $modelo + "\"," + $marca + ")";
     echo "consulta:" . $query1 . "<br/>";
-    if($mysqli->query($query1) === TRUE){
+    if ($mysqli->query($query1) === TRUE) {
         echo "ID comp:" . $mysqli->insert_id . "<br/>";
         $idComponenteG = $mysqli->insert_id;
-    }else{
+    } else {
         echo 'todo mallllllllll';
         exit();
     }
-        
-    /*$resultado = $mysqli->query("INSERT INTO `gestion_incidentes`.`componente_general`
-                            (`id_tipo_componente_general`,
-                            `descripcion`,
-                            `id_marca`)
-                             VALUES 
-                            (" + $idTipoComponente + ",\"" + $modelo + "\",\"" + $marca + "\")");*/
-    
-    
-    echo "ID tipo comp:" . $idTipoComponente. "<br/>";
-    echo "modelo:" . $modelo. "<br/>";
-    echo "marca:" . $marca. "<br/>";
+
+    /* $resultado = $mysqli->query("INSERT INTO `gestion_incidentes`.`componente_general`
+      (`id_tipo_componente_general`,
+      `descripcion`,
+      `id_marca`)
+      VALUES
+      (" + $idTipoComponente + ",\"" + $modelo + "\",\"" + $marca + "\")"); */
+
+
+    echo "ID tipo comp:" . $idTipoComponente . "<br/>";
+    echo "modelo:" . $modelo . "<br/>";
+    echo "marca:" . $marca . "<br/>";
 
     /*
      * Aqui colocaremos las caracteristicas especificas de cada tipo componente
      */
 
-    $vectorDetalles = new ArrayObject();
-    $detalle = new DetalleComponente();
-    switch ($idTipoComponente) {
-        case 1:
-            echo 'entre!!';
-            $conexion = filter_input(INPUT_POST, "conexion");
-            $detalle->__constructor();
-            $detalle->setId_descripcion(3);
-            $detalle->setValor(NULL);
-            $detalle->setValor_alfanumerico($conexion);
-            $detalle->setId_unidad_medida(NULL);
-            $vectorDetalles[] = $detalle;
-
-            $medida = filter_input(INPUT_POST, "medida");
-            $detalle->__constructor();
-            $detalle->setId_descripcion(5);
-            $detalle->setValor($medida);
-            $detalle->setValor_alfanumerico(NULL);
-            $detalle->setId_unidad_medida(7);
-            $vectorDetalles[] = $detalle;
-
-            break;
-        default :
-            break;
-    }
-    print sizeof($vectorDetalles, TRUE)."\n";
-    
+    //Por cada Detalle de componente se debe realizar un insert a la tabla detalle_componente
     foreach ($vectorDetalles as $det) {
-        $mysqli->query("INSERT INTO `gestion_incidentes`.`detalle_componente_general`
-                    (`id_componente_general`,
+        $mysqli->query("INSERT INTO `gestion_incidentes`.`detalle_componente`
+                    (`id_componente`,
                     `id_descripcion`,
                     `valor`,
                     `valor_alfanumerico`,
@@ -87,7 +69,7 @@ try {
         print("Falló la consignación de la transacción\n");
         echo "todo mal1";
         exit();
-    }else{
+    } else {
         echo "todo bien";
     }
 } catch (mysqli_sql_exception $myE) {
