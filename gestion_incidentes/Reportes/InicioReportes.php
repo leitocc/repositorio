@@ -8,7 +8,7 @@ include_once '../limpiarSesion.php';
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Sistemas Informaticos</title>
+        <title>SGI-HW - Reportes</title>
         <link rel="stylesheet" type="text/css" href="/incidentes/css/estilo.css" />
     </head>
     <body id="top">

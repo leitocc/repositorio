@@ -3,12 +3,12 @@ session_start();
 $permisos = array("6", "1");
 $_SESSION['permisos'] = $permisos;
 include_once '../verificarPermisos.php';
-require_once '../Conexion.php';
+require_once '../Conexion2.php';
 ?>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Sistemas Informaticos - Consultar Historial</title>
+        <title>SGI-HW - Reportes</title>
         <script type="text/javascript" src="/incidentes/js/jquery-1.11.1.js"></script>
         <script type="text/javascript" src="/incidentes/js/jquery-ui.js"></script>
         <script type="text/javascript" src="/incidentes/js/jquery.validate.js"></script>
@@ -48,31 +48,6 @@ require_once '../Conexion.php';
                         $("#si").html("<option>Seleccione...</option>")
                     }
                 });
-                /*$("#fechaD").datepicker({
-                 dateFormat: 'dd/mm/yy',
-                 maxDate: "+0D",
-                 defaultDate: "-2w",
-                 changeMonth: true,
-                 changeYear: true,
-                 numberOfMonths: 2,
-                 onClose: function( selectedDate ) {
-                 $( "#fechaH" ).datepicker( "option", "minDate", selectedDate );
-                 }
-                 });
-                 $("#fechaH").datepicker({
-                 dateFormat: 'dd/mm/yy',
-                 maxDate: "+0D",
-                 changeMonth: true,
-                 changeYear: true,
-                 numberOfMonths: 2,
-                 onClose: function( selectedDate ) {
-                 if(selectedDate !== ""){
-                 $( "#fechaD" ).datepicker( "option", "maxDate", selectedDate );
-                 }else{
-                 $( "#fechaD" ).datepicker( "option", "maxDate", "+0D" );
-                 }
-                 }
-                 });*/
                 $("#Volver").click(function (mievento) {
                     mievento.preventDefault();
                     window.location = 'InicioReportes.php';
@@ -81,7 +56,7 @@ require_once '../Conexion.php';
                     e.preventDefault();
                     if (validarCampos()) {
                         $.ajax({
-                            url: "/incidentes/SistemaInformatico/ajax/tablaHistoricoSI.php",
+                            url: "/incidentes/Reportes/ajax/tablaHistoricoSI.php",
                             type: "POST",
                             data: "tipo=" + $("#tipo").val() + "&si=" + $("#si").val()
                                     + "&fechaD=" + $("#fechaD").val() + "&fechaH=" + $("#fechaH").val(),
@@ -102,22 +77,27 @@ require_once '../Conexion.php';
 
                 <div class="main">
                     <div class="post">
-                        <form name="formulario" id="formulario" action="PaginaConsultaHistorial.php?param=0" method="post" class="contact_form">
+                        <form name="formulario" id="formulario" action="PaginaConsultaHistorial.php" method="post" class="contact_form">
                             <li><h2>Buscar Sistema Informático</h2></li>
                             <div style="width: 600px;">
                                 <table>
                                     <tr>
                                         <td>Sala:</td>
                                         <td>
-                                            <?php $consultaSala = "select id_sala, nombre from sala" ?>
-                                            <?php $query1 = mysql_query($consultaSala) ?>
+                                            <?php
+                                            $consultaSala = "select id_sala, nombre from sala";
+                                            $query1 = $mysqli->query($consultaSala);
+                                            ?>
 
-                                            <?php #Primer combo de sala   ?>
                                             <select name="sala" id="sala" required>
                                                 <option value="">Seleccione...</option>
-                                                <?php while ($row = mysql_fetch_array($query1)) { ?>
+                                                <?php while ($row = $query1->fetch_assoc()) { ?>
                                                     <option value ="<?php echo $row['id_sala'] ?>"><?php echo $row['nombre'] ?></option>
-                                                <?php } ?>
+                                                    <?php
+                                                }
+                                                $query1->free();
+                                                ?>
+
                                             </select>
 
                                         </td>
@@ -125,45 +105,35 @@ require_once '../Conexion.php';
                                     <tr>
                                         <td>Identificaci&oacute;n:</td>
                                         <td>
-                                            <?php #Segundo combo, Sistema informatico  ?>
                                             <select name="si" id="si" required>
                                                 <option value="">Seleccione...</option>
                                             </select>
                                         </td>
                                     </tr>
-
-<!-- /**<td>Desde:</td>
-  <td>
-      <input type="date" name="fechaD" id="fechaD"/>
-<td>Hasta:</td>
-  <td>
-      <input type="date" name="fechaH" id="fechaH"/>     
-  </td>
-<tr>  -->
-                                    <td>Componente:</td>
-                                    <td><?php $consulta = mysql_query("select * from tipo_componente"); ?>
-                                        <select name='tipo' id="tipo" required>
-                                            <option value="" >Seleccione...</option>
-                                            <?php while ($row = mysql_fetch_array($consulta)) { ?>
-                                                <option value ="<?php echo $row['id_tipo_componente']; ?>"><?php echo $row['descripcion'] ?> </option>
-                                                }
-                                            <?php } ?>
-                                        </select>
-                                    </td>
+                                    <tr>
+                                        <td>Componente:</td>
+                                        <td><?php $consulta = $mysqli->query("select * from tipo_componente"); ?>
+                                            <select name='tipo' id="tipo" required>
+                                                <option value="" >Seleccione...</option>
+                                                <?php while ($row = $consulta->fetch_assoc()) { ?>
+                                                    <option value ="<?php echo $row['id_tipo_componente']; ?>"><?php echo $row['descripcion'] ?> </option>
+                                                    }
+                                                <?php } ?>
+                                            </select>
+                                        </td>
                                     </tr>  
-
                                 </table>
                             </div>
                             <li>
+                                <button class="submit" name="volver" id="Volver">Volver</button>
                                 <button class="submit" name="siguiente" id="buscar">Buscar</button>
-                                <button class="submit" name="Submit" id="Volver">Volver</button>
                             </li>
                         </form>
 
                         <div id="tablaHistorico"></div>
                     </div>
                 </div>
-                <?php include_once './../foot.php'; ?>
+                <?php include_once '../foot.php'; ?>
             </div>
         </div>
     </body>

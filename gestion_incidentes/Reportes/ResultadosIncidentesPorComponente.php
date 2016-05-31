@@ -11,7 +11,7 @@ require_once '../Conexion2.php';
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Sistemas Informaticos - Consultar</title>
+        <title>SGI-HW - Reportes</title>
         <link rel="stylesheet" type="text/css" href="/incidentes/css/estilo.css"/>
         <script type="text/javascript" src="/incidentes/js/ajax.js"></script>
         <script type="text/javascript">
@@ -25,7 +25,6 @@ require_once '../Conexion2.php';
             function procesaRespuesta() {
                 if (peticion_http.readyState == READY_STATE_COMPLETE) {
                     if (peticion_http.status == 200) {
-                        //document.getElementById("datos").innerHTML = "<p> HOLA!!! </p>";
                         document.getElementById("datos").innerHTML = peticion_http.responseText;
                     }
                 }
@@ -52,35 +51,37 @@ require_once '../Conexion2.php';
                     <div class="post">
                         <form name="formulario" id="formulario" action="InicioReportes.php" method="post" class="contact_form">
                             <?php ?>
-                            <li><h2>Reporte Incidentes por componente afectado</h2></li>
+                            <li><h2>Reporte de incidentes por componente afectado</h2></li>
                             <li><h3>Incidentes que afectaron el Sistema Informatico: <?php echo $si ?></h3></li>
                             <li><h4>Seleccione componente afectado:</h4></li>
-                            <table>
-                                <tr>
-                                    <td>Componente:</td>
-                                    <td>
-                                        <?php
-                                        $query = "select * from tipo_componente";
-                                        $resultado = $mysqli->query($query);
-                                        $aux = "<select name='tipoComponente' id='tipoComponente'>";
-                                        $aux.= "<option value=''>Seleccione...</option>";
-                                        print($aux);
-                                        while ($row = $resultado->fetch_assoc()) {
-                                            $aux = "<option value =" . $row['id_tipo_componente'] . " >";
-                                            $aux.= $row['descripcion'] . "</option>";
+                            <div>
+                                <table>
+                                    <tr>
+                                        <td>Componente:</td>
+                                        <td>
+                                            <?php
+                                            $query = "select * from tipo_componente";
+                                            $resultado = $mysqli->query($query);
+                                            $aux = "<select name='tipoComponente' id='tipoComponente'>";
+                                            $aux.= "<option value=''>Seleccione...</option>";
                                             print($aux);
-                                            $aux = "";
-                                        }
-                                        print '</select>';
-                                        $resultado->free();
-                                        ?>
-                                    </td>
-                                </tr>
-                            </table>
-                            <div id="datos"></div>
-                            <li>
-                                <button class="submit" name="Submit" id="Volver">Volver</button>
-                            <li/>
+                                            while ($row = $resultado->fetch_assoc()) {
+                                                $aux = "<option value =" . $row['id_tipo_componente'] . " >";
+                                                $aux.= $row['descripcion'] . "</option>";
+                                                print($aux);
+                                                $aux = "";
+                                            }
+                                            print '</select>';
+                                            $resultado->free();
+                                            ?>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div id="datos"></div>
+                                <li>
+                                    <button class="submit" name="Submit" id="Volver">Volver</button>
+                                </li>
+                            </div>
                         </form>
                     </div>
                 </div>

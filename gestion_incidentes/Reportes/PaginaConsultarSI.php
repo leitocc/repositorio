@@ -7,7 +7,7 @@ include_once '../verificarPermisos.php';
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Sistemas Informaticos - Consultar</title>
+        <title>SGI-HW - Reportes</title>
         <script type="text/javascript" src="/incidentes/js/jquery-1.11.1.js"></script>
         <script type="text/javascript" src="/incidentes/js/jquery-ui.js"></script>
         <script type="text/javascript" src="/incidentes/js/jquery.validate.js"></script>
@@ -60,7 +60,7 @@ include_once '../verificarPermisos.php';
                     <div class="post">
                         <form name="formulario" id="formulario" action="ConsultaSI.php" method="post" class="contact_form">
                             <?php
-                            require_once '../Conexion.php';
+                            require_once '../Conexion2.php';
                             ?>
                             <li><h2>Buscar Sistema Informático</h2></li>
                             <div style="width: 400px">
@@ -68,15 +68,19 @@ include_once '../verificarPermisos.php';
                                     <tr>
                                         <td><label for="sala">Sala:</label></td>
                                         <td>
-                                            <?php $consultaSala = "select id_sala, nombre from sala" ?>
-                                            <?php $query1 = mysql_query($consultaSala) ?>
+                                            <?php
+                                            $consultaSala = "select id_sala, nombre from sala";
+                                            $resultado = $mysqli->query($consultaSala)
+                                            ?>
 
-                                            <?php #Primer combo de sala  ?>
-                                            <select name="sala" id="sala" required="">
+                                            <select name="sala" id="sala" required>
                                                 <option value="" >Seleccione...</option>
-                                                <?php while ($row = mysql_fetch_array($query1)) { ?>
+                                                <?php while ($row = $resultado->fetch_assoc()) { ?>
                                                     <option value ="<?php echo $row['id_sala'] ?>"><?php echo $row['nombre'] ?></option>
-                                                <?php } ?>
+                                                    <?php
+                                                }
+                                                $resultado->free();
+                                                ?>
                                             </select>
 
                                         </td>
@@ -84,7 +88,6 @@ include_once '../verificarPermisos.php';
                                     <tr>
                                         <td><label for="si">Identificaci&oacute;n:</label></td>
                                         <td>
-                                            <?php #Segundo combo, Sistema informatico ?>
                                             <select name="si" id="si" required>
                                                 <option value="">Seleccione...</option>
                                             </select>
@@ -94,8 +97,8 @@ include_once '../verificarPermisos.php';
                             </div>
 
                             <li>
-                                <button class="submit" name="siguiente" id="siguiente">Enviar</button>
                                 <button class="submit" name="Submit" id="Volver">Volver</button>
+                                <button class="submit" name="siguiente" id="siguiente">Enviar</button>
                             <li/>
                         </form>
                     </div>

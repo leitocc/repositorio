@@ -7,7 +7,7 @@ include_once '../verificarPermisos.php';
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Sistemas Informaticos - Consultar</title>
+        <title>SGI-HW - Reportes</title>
         <script type="text/javascript" src="/incidentes/js/jquery-1.11.1.js"></script>
         <script type="text/javascript" src="/incidentes/js/jquery-ui.js"></script>
         <script type="text/javascript" src="/incidentes/js/jquery.validate.js"></script>
@@ -23,15 +23,10 @@ include_once '../verificarPermisos.php';
                             data: "sala=" + $("#sala").val(),
                             success: function (opciones) {
                                 $("#si").html(opciones).show("slow");
-                                //$("#agregarProvincia").attr("hidden", false);
-                                //$("#boton").attr("disabled", true);
                             }
                         });
                     } else {
                         $("#si").html("<option value=\"\">Seleccione...</option>")
-                        //$("#selectLocalidad").html("<option>Seleccione...</option>")
-                        //$("#agregarProvincia").attr("hidden", true);
-                        //$("#boton").attr("disabled", true);
                     }
                 });
                 $("#formulario").validate({
@@ -88,7 +83,6 @@ include_once '../verificarPermisos.php';
                                     <tr>
                                         <td><label for="si">Identificaci&oacute;n:</label></td>
                                         <td>
-                                            <?php #Segundo combo, Sistema informatico ?>
                                             <select name="si" id="si" required>
                                                 <option value="">Seleccione...</option>
                                             </select>
@@ -99,7 +93,7 @@ include_once '../verificarPermisos.php';
 
                             <li>
                                 <button class="submit" name="Submit" id="Volver">Volver</button>
-                                <button class="submit" name="siguiente" id="siguiente">Enviar</button>
+                                <button class="submit" name="siguiente" id="siguiente">Siguiente</button>
                             <li/>
                         </form>
                     </div>
