@@ -15,8 +15,10 @@ $modelo = filter_input(INPUT_POST, "modelo");
 $mes = filter_input(INPUT_POST, "mes");
 $anio = filter_input(INPUT_POST, "anio");
 $proveedor = filter_input(INPUT_POST, "proveedor");
+$idTipoComponente = filter_input(INPUT_POST, "tipoComponente");
+$Contenido = array("marca" => $marca, "idTipoComponente" => $idTipoComponente, "modelo" => $modelo, "mes" => $mes, "anio" => $anio, "proveedor" => $proveedor, "");
+$_SESSION["Componente"] = $Contenido;
 
-$idTipoComponente = filter_input(INPUT_POST, "idTipoComponente");
 
 $_SESSION['Detalles'] = NULL;
 
@@ -24,7 +26,6 @@ $vectorDetalles = new ArrayObject();
 $detalle = new DetalleComponente();
 switch ($idTipoComponente) {
     case 1:
-        echo 'entre!!';
         $conexion = filter_input(INPUT_POST, "conexion");
         $detalle->__constructor();
         $detalle->setId_descripcion(3);
@@ -164,7 +165,7 @@ $_SESSION['Detalles'] = $vectorDetalles;
         <script type="text/javascript" src="/incidentes/js/ajax.js"></script>
 
         <script type="text/javascript">
-            
+
             window.onload = function () {
                 document.getElementById("sala").onchange = function (e) {
                     var nrosala = document.getElementById('sala').value;

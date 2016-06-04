@@ -16,8 +16,8 @@ require_once '../../Conexion2.php';
         while ($row = $resultado->fetch_assoc()) {
             ?>
             <div style="float: left; height: 30px">
-                <input type="checkbox" name="SI<?php echo $row['ISI']; ?>" class="componentes" value="<?php echo $row['ISI'] ?>" id="SI<?php echo $row['ISI'] ?>">
-                <label for="SI<?php echo $row['ISI'] ?>"> <?php echo $row['ISI'] ?> </label>
+                <input type="checkbox" name="SI[<?php echo $row['ISI']; ?>]" class="Componente" value="<?php echo $row['ISI'] ?>" id="SI[<?php echo $row['ISI']; ?>]">
+                <label for="SI[<?php echo $row['ISI'] ?>]"> <?php echo $row['ISI'] ?> </label>
             </div>  
             <?php
         }
