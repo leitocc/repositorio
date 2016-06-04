@@ -1,4 +1,5 @@
 <?php
+//
 session_start();
 $permisos = array("6", "1");
 $_SESSION['permisos'] = $permisos;
