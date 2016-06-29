@@ -5,11 +5,12 @@ $_SESSION['permisos'] = $permisos;
 include_once '../verificarPermisos.php';
 $id = filter_input(INPUT_GET, "id");
 require_once '../formatoFecha.class.php';
-require_once '../Conexion.php';
-$buscarIncidente = "SELECT I.id_incidente, I.id_sistema_informatico_afectado AS si, I.fecha, T.nombre_turno AS turno,
+//require_once '../Conexion.php';
+require_once '../Conexion2.php';
+$queryIncidente = "SELECT I.id_incidente, I.id_sistema_informatico_afectado AS si, I.fecha, T.nombre_turno AS turno,
                     S.nombre AS sala, I.descripcion, CI.nombre AS causa_incidente, I.id_estado AS idEstado, E.nombre_estado AS estado,
                     A.nombre_actividad, A.nivel_actividad, A.responsable1, A.responsable2, P.apellido AS apellido_reporto,
-                    P.nombre AS nombre_reporto, R.nombre AS rol_reporto
+                    P.nombre AS nombre_reporto, R.nombre AS rol_reporto, I.id_tipo_componente_afectado
                     FROM incidente I 
                     INNER JOIN persona P ON I.id_persona_reporto = P.id_persona
                     INNER JOIN causa_incidente CI ON I.id_causa_incidente = CI.id_tipo_incidente
@@ -19,12 +20,20 @@ $buscarIncidente = "SELECT I.id_incidente, I.id_sistema_informatico_afectado AS 
                     INNER JOIN turno T ON I.id_turno = T.id_turno
                     INNER JOIN sala S ON I.id_sala = S.id_sala
                     WHERE I.id_incidente = " . $id;
-$query1 = mysql_query($buscarIncidente);
-if (mysql_errno() || mysql_affected_rows() <= 0) {
+//echo $queryIncidente . "</br>";
+$buscarIncidentes = $mysqli->query($queryIncidente);
+if (!$buscarIncidentes) {
     printf("Error en la consulta %s\n", mysql_error());
     exit();
 }
-$incidente = mysql_fetch_array($query1);
+//$query1 = mysql_query($buscarIncidente);
+//if (mysql_errno() || mysql_affected_rows() <= 0) {
+//    printf("Error en la consulta %s\n", mysql_error());
+//    exit();
+//}
+
+$incidente = $buscarIncidentes->fetch_assoc();
+//$incidente = mysql_fetch_array($query1);
 ?>
 <html>
     <head>
@@ -141,14 +150,28 @@ $incidente = mysql_fetch_array($query1);
                     //alert("bien");
                     return true;
                 }
+                
+                $("#tipoComponente[]").change(function (mievento) {
+                    mievento.preventDefault();
+                    alert("aidsfhsd");
+                    var ultimo = document.getElementById("tipoDocumento").lastElementChild;
+                    $.ajax({
+                        url: "/incidentes/Incidentes/cargarAccionCorrectiva.php",
+                        type: "POST",
+                        data: "tipoComponente=" + ultimo.value,
+                        success: function (opciones) {
+                            $("#accion").html(opciones).show("slow");
+                        }
+                    });
+                });
             });
         </script>
     </head>
     <body id="top">
-                <?php include_once '../master.php'; ?>
+        <?php include_once '../master.php'; ?>
         <div id="site">
             <div class="center-wrapper">
-<?php include_once '../menu.php'; ?>
+                <?php include_once '../menu.php'; ?>
 
                 <div class="main">
                     <div class="post">
@@ -208,9 +231,19 @@ $incidente = mysql_fetch_array($query1);
                             <div style="width: 700px;">
                                 <table>
                                     <tr>
-                                        <td>Causa:</td>
+                                        <td>Probable componente afectado:</td>
                                         <td colspan="3">
-                                            <input type="text" id="causa" name="causa" value="<?php echo $incidente['causa_incidente'] ?>" readonly="true"/>
+                                            <input type="text" id="componenteAfectado" 
+                                                   name="componenteAfectado" value="<?php echo $incidente['id_tipo_componente_afectado'] ?>" 
+                                                   readonly="true"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Indicio de incidente:</td>
+                                        <td colspan="3">
+                                            <input type="text" id="causa" name="causa" 
+                                                   value="<?php echo $incidente['causa_incidente'] ?>" 
+                                                   readonly="true"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -275,14 +308,19 @@ $incidente = mysql_fetch_array($query1);
                         FROM detalle_intervencion DI 
                         INNER JOIN persona P ON P.id_persona = DI.id_persona_detalle_intervencion
                         WHERE DI.id_incidente = " . $id;
-                            $result = mysql_query($queryDetalles);
                             $idDetalle = 0;
-                            if (mysql_errno() == 0 && mysql_affected_rows() > 0) {
+
+                            $buscarDetalles = $mysqli->query($queryDetalles);
+                            if ($buscarDetalles && $mysqli->affected_rows > 0) {
+
+//                            $result = mysql_query($queryDetalles);
+//                            if (mysql_errno() == 0 && mysql_affected_rows() > 0) {
                                 ?>
                                 <fieldset><legend><h4>Intervenciones</h4></legend>
                                     <div class="archive-separator"></div>
                                     <?php
-                                    while ($detalles = mysql_fetch_array($result)) {
+                                    while ($detalles = $buscarDetalles->fetch_assoc()) {
+//                                    while ($detalles = mysql_fetch_array($result)) {
                                         $idDetalle = $idDetalle + 1;
                                         ?>
                                         <fieldset><legend><h5>Intervención nro. <?php echo $idDetalle ?> - Reportado por: <?php echo $detalles['apellido'] . ", " . $detalles['nombre'] ?></h5></legend>
@@ -318,14 +356,19 @@ $incidente = mysql_fetch_array($query1);
                                     INNER JOIN tipo_componente TC ON C.id_tipo_componente = TC.id_tipo_componente
                                     WHERE DI.id_detalle_intervencion = " . $detalles['id'] .
                                                         " AND DI.id_incidente = " . $id;
-                                                $resultComponentes = mysql_query($queryComponentes);
-                                                if (mysql_errno() == 0 && mysql_affected_rows() > 0) {
+
+                                                $buscarComponentes = $mysqli->query($queryComponentes);
+                                                if ($buscarComponentes && $mysqli->affected_rows > 0) {
+
+//                                                $resultComponentes = mysql_query($queryComponentes);
+//                                                if (mysql_errno() == 0 && mysql_affected_rows() > 0) {
                                                     ?>
                                                     <tr>
                                                         <td>Componente afectado:</td>
                                                         <td colspan="3">
                                                             <?php
-                                                            while ($componentes = mysql_fetch_array($resultComponentes)) {
+                                                            while ($componentes = $buscarComponentes->fetch_assoc()) {
+//                                                            while ($componentes = mysql_fetch_array($resultComponentes)) {
                                                                 ?>
                                                                 <input type="text" readonly="true"
                                                                        id="<?php echo $componentes['descripcion'] ?>_det<?php echo $detalles['id'] ?>" 
@@ -354,14 +397,19 @@ $incidente = mysql_fetch_array($query1);
                                 INNER JOIN accion_correctiva AC ON AC.id_accion = ACXDI.id_accion
                                 WHERE DI.id_detalle_intervencion = " . $detalles['id'] .
                                                         " AND DI.id_incidente = " . $id;
-                                                $resultAcciones = mysql_query($queryAcciones);
-                                                if (mysql_errno() == 0 && mysql_affected_rows() > 0) {
+
+                                                $buscarAcciones = $mysqli->query($queryAcciones);
+                                                if ($buscarAcciones && $mysqli->affected_rows > 0) {
+
+//                                                $resultAcciones = mysql_query($queryAcciones);
+//                                                if (mysql_errno() == 0 && mysql_affected_rows() > 0) {
                                                     ?>
                                                     <tr>
                                                         <td>Acciones correctivas:</td>
                                                         <td colspan="3">
                                                             <?php
-                                                            while ($acciones = mysql_fetch_array($resultAcciones)) {
+                                                            while ($acciones = $buscarAcciones->fetch_assoc()) {
+//                                                            while ($acciones = mysql_fetch_array($resultAcciones)) {
                                                                 ?>
                                                                 <input type="text" readonly="true"
                                                                        id="<?php echo $acciones['descripcion'] ?>_det<?php echo $acciones['id'] ?>" 
@@ -381,7 +429,7 @@ $incidente = mysql_fetch_array($query1);
                                 }
                                 ?>
                             </fieldset>    
-<?php if ($incidente['idEstado'] == 1) { ?>
+                            <?php if ($incidente['idEstado'] == 1) { ?>
 
 
                                 <!-- Aqui se coloca el nuevo detalle de incidente ------------------------------------------------------>
@@ -416,25 +464,81 @@ $incidente = mysql_fetch_array($query1);
                                                     </td>
                                                 </tr>
                                             </table>
-                                        </div></fieldset>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset><legend>Componente</legend>
+                                        <div style="width: 800px;">
+                                            <table id="componentesTratados">
+                                                <tr>
+                                                    <td>*Componenete tratado:</td>
+                                                    <td>
+                                                        <?php
+                                                        $qComponentesSI = "SELECT TC.id_tipo_componente AS id, TC.descripcion AS nombre 
+                                                FROM sistema_informatico SI 
+                                                INNER JOIN componente C ON C.id_sistema_informatico = SI.id_sistema_informatico
+                                                INNER JOIN tipo_componente TC ON C.id_tipo_componente = TC.id_tipo_componente
+                                                WHERE SI.id_sistema_informatico = " . $incidente['si'];
+                                                        //echo $componentesSI."</br>";
+                                                        
+                                                        print '<select name="tipoComponente[0]" id="tipoComponente[0]" required>';
+                                                        print '<option value="">Seleccione...</option>';
+                                                        $buscarComponenteSI = $mysqli->query($qComponentesSI);
+                                                        if ($buscarComponenteSI) {
+                                                            while ($row = $buscarComponenteSI->fetch_assoc()) {
+                                                                print '<option value="' . $row['id'] . '">' . $row['nombre'] . '</option>';
+                                                            }
+                                                        }
+                                                        print '</select>';
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <div><input type="checkbox" name="componente0" id="comp0" value="0" class="componentes" style="height: 30px"/><label for="comp0">Ninguno</label></div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>*Accion correctiva<br/>realizada:</td>
+                                                    <td colspan="2">
+                                                        <select name="accion" id="accion" required>
+                                                            <option value="">Seleccione...</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </fieldset>
+                                    <!----------------------------------------------------------------------------------------------------------------------------->
+                                    <?php /*
                                     <fieldset><legend>Componente</legend>
                                         <div style="float: left; width: 750px">
                                             <?php
-                                            $consulta = "SELECT TC.id_tipo_componente AS id, TC.descripcion AS nombre FROM tipo_componente TC";
-                                            $query1 = mysql_query($consulta);
-                                            if (mysql_errno() == 0) {
-                                                $componentesSI = "SELECT TC.id_tipo_componente AS id, TC.descripcion AS nombre 
+                                            $qTipoComponente = "SELECT TC.id_tipo_componente AS id, TC.descripcion AS nombre FROM tipo_componente TC";
+                                            $buscarTC = $mysqli->query($qTipoComponente);
+                                            if ($buscarTC) {
+
+//                                            $query1 = mysql_query($consulta);
+//                                            if (mysql_errno() == 0) {
+                                                $qComponentesSI = "SELECT TC.id_tipo_componente AS id, TC.descripcion AS nombre 
                                                 FROM sistema_informatico SI 
                                                 INNER JOIN componente C ON C.id_sistema_informatico = SI.id_sistema_informatico
                                                 INNER JOIN tipo_componente TC ON C.id_tipo_componente = TC.id_tipo_componente
                                                 WHERE SI.id_sistema_informatico = " . $incidente['si'];
                                                 //echo $componentesSI."</br>";
-                                                $query2 = mysql_query($componentesSI);
-                                                while ($rowSI = mysql_fetch_assoc($query2)) {
+
+                                                $buscarComponenteSI = $mysqli->query($qComponentesSI);
+                                                while ($rowSI = $buscarComponenteSI->fetch_assoc()) {
                                                     $compSI[] = $rowSI['nombre'];
                                                 }
+
+//                                                $query2 = mysql_query($componentesSI);
+//                                                while ($rowSI = mysql_fetch_assoc($query2)) {
+//                                                    $compSI[] = $rowSI['nombre'];
+//                                                }
                                                 //echo print_r($compSI)."</br>";
-                                                while ($row = mysql_fetch_array($query1)) {
+
+                                                while ($row = $buscarTC->fetch_assoc()) {
+
+
+//                                                while ($row = mysql_fetch_array($query1)) {
                                                     //echo print_r($row['nombre'])."</br>";
                                                     if (!empty($compSI) && in_array($row['nombre'], $compSI)) {
                                                         ?>
@@ -452,6 +556,8 @@ $incidente = mysql_fetch_array($query1);
                                         <div><button class="submitComponente" align="left" type="button" name="agregarComponente" id="agregarComponente">Cargar Componente</button></div>
                                         <div style="clear: both;"><p style="color: red; font-size: 13px">(**) Los componentes en ROJO no se encuentran cargados en el sistema</p></div>
                                     </fieldset>
+
+
                                     <fieldset><legend>Descripción</legend>
                                         <textarea id="descripcion" name="descripcionInterv" id="descripcionInterv" value="" cols="80" rows="4" required></textarea>
                                     </fieldset>
@@ -459,18 +565,26 @@ $incidente = mysql_fetch_array($query1);
                                     <fieldset><legend>Acción correctiva</legend>
                                         <div style="width: 750px;">
                                             <?php
-                                            $consulta = "SELECT AC.id_accion AS id, AC.nombre FROM accion_correctiva AC";
-                                            $query1 = mysql_query($consulta);
-                                            if (mysql_errno() == 0) {
-                                                while ($row = mysql_fetch_array($query1)) {
+                                            $qConsultaAccion = "SELECT AC.id_accion AS id, AC.nombre FROM accion_correctiva AC";
+                                            $buscarAcciones = $mysqli->query($qComponentesSI);
+                                            if ($buscarAcciones) {
+                                                while ($row = $buscarAcciones->fetch_assoc()) {
+
+//                                            $query1 = mysql_query($consulta);
+//                                            if (mysql_errno() == 0) {
+//                                                while ($row = mysql_fetch_array($query1)) {
                                                     ?>
                                                     <div style="float: left; height: 50px;"><input type="checkbox" name="accion<?php echo $row['id'] ?>" id="accion<?php echo $row['id'] ?>" value="<?php echo $row['id'] ?>" class="acciones"/><label for="accion<?php echo $row['id'] ?>"><?php echo $row['nombre'] ?></label><br/></div>
 
-        <?php }
-    }
-    ?>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
                                         </div>
                                     </fieldset>
+                                    */ ?>
+                                    <!----------------------------------------------------------------------------------------------------------------------------->
+                                    <!----------------------------------------------------------------------------------------------------------------------------->
                                     <!--<div><button  type="button" name="agregarComponente" id="agregarComponente">Agregar</button></div>-->
                                     <fieldset><legend>Actualización estado Incidente</legend>
                                         <div style="width: 250px;">
@@ -481,16 +595,21 @@ $incidente = mysql_fetch_array($query1);
                                                         <select id="estado" name="estado" required>
                                                             <option value="">Seleccione...</option>
                                                             <?php
-                                                            $consultaEstado = "SELECT E.nombre_estado AS nombre, E.id_estado AS id
+                                                            $qConsultaEstado = "SELECT E.nombre_estado AS nombre, E.id_estado AS id
                             FROM estado E";
-                                                            $query1 = mysql_query($consultaEstado);
-                                                            if (mysql_errno() == 0) {
-                                                                while ($row = mysql_fetch_array($query1)) {
+                                                            $buscarEstado = $mysqli->query($qConsultaEstado);
+                                                            if ($buscarEstado) {
+                                                                while ($row = $buscarEstado->fetch_assoc()) {
+
+//                                                            $query1 = mysql_query($consultaEstado);
+//                                                            if (mysql_errno() == 0) {
+//                                                                while ($row = mysql_fetch_array($query1)) {
                                                                     ?>
                                                                     <option value ="<?php echo $row['id'] ?>"><?php echo $row['nombre'] ?></option>
-        <?php }
-    }
-    ?>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -502,15 +621,17 @@ $incidente = mysql_fetch_array($query1);
                                     <!-- Por ultimo los botones-->
                                     <button class="submit" name="registrar" type="submit" id="modificar">Registrar</button>
                                     <button class="submit" name="cancelar" id="cancelar">Cancelar</button>
-                <?php } else { ?>
+                                <?php } else { ?>
                                     <h4>Estado del Incidente: <?php echo $incidente['estado'] ?></h4>
                                     <button class="submit" name="volver" id="volver">Volver</button>
-<?php } ?></fieldset>
+                                <?php } ?></fieldset>
                         </form>
                     </div>
                 </div>
-<?php include_once './../foot.php'; ?>
+                <?php include_once './../foot.php'; ?>
             </div>
         </div>
     </body>
 </html>
+<?php
+$mysqli->close();
