@@ -3,7 +3,7 @@ session_start();
 $permisos = array("6", "1");
 $_SESSION['permisos'] = $permisos;
 include_once '../../verificarPermisos.php';
-require_once '../../Conexion.php';?>
+require_once '../../Conexion2.php';?>
 
 <html>
     <head>
@@ -40,8 +40,9 @@ require_once '../../Conexion.php';?>
                         }elseif($modo === "mod"){
                             $titulo = "Modificar Marca";
                             $idMarca = filter_input(INPUT_POST, "marca");
-                            $consulta = mysql_query("select descripcion from marca where id_marca = ".$idMarca);
-                            while ($row = mysql_fetch_array($consulta)) {
+                            $query24="select descripcion from marca where id_marca = ".$idMarca;
+                            $consulta = $mysqli->query($query24);
+                            while ($row = $consulta->fetch_assoc()) {
                                 $marca = $row['descripcion'];
                             } 
                         }

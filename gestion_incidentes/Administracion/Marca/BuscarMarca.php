@@ -32,16 +32,16 @@ include_once '../../verificarPermisos.php';
                     <div class="post">
                         <form name="formulario" id="formulario" action="ABMMarca.php?modo=mod" method="post" class="contact_form">
                         <?php
-                        require_once '../../Conexion.php';
+                        require_once '../../Conexion2.php';
                         ?>
                             <li><h2>Buscar Marca</h2></li>
                             <li>
                                 <label for="marca">Marca:</label>
-                                <?php $consulta ="select id_marca As id, descripcion from marca" ?>
-                                <?php $query1 =  mysql_query($consulta) ?>
+                                <?php $consulta="select id_marca As id, descripcion from marca" ?>
+                                <?php $resultado10=$mysqli->query($consulta); ?>
                                 <select name="marca" id="marca" required>
                                     <option value="" >Seleccione...</option>
-                                    <?php while ($row = mysql_fetch_array($query1)) { ?>
+                                    <?php while ($row = $resultado10->fetch_assoc()){ ?>
                                     <option value ="<?php echo $row['id'] ?>"><?php echo $row['descripcion'] ?></option>
                                     <?php } ?>
                                 </select>

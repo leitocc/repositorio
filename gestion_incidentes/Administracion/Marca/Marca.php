@@ -1,24 +1,26 @@
 <?php
 session_start();
 try{
-    require_once '../../Conexion.php';
+    require_once '../../Conexion2.php';
     $mensaje = "";
     $modo = filter_input(INPUT_POST, "modo");
     $nombre = filter_input(INPUT_POST, "nombre");
     if($modo === "ins"){
-        $consultaMaxId = mysql_query("SELECT MAX(id_marca) AS id FROM marca");
-        if(mysql_errno() == 0){
-            $idMarca = mysql_fetch_array($consultaMaxId);
+        $consultamarca="SELECT MAX(id_marca) AS id FROM marca";
+        $resultadoMaxId = $mysqli->query($consultamarca);
+        if($row = $consulta->fetch_assoc()){
+            $idMarca['id'] = $row["id_marca"];
         }else{
             $idMarca['id'] = 0;
         }
         $idMarca['id']++;
         $queryMarca = "INSERT INTO marca (`id_marca`,`descripcion`) VALUES (".$idMarca['id'].", '".$nombre."');";
-        $consultaMarca = mysql_query($queryMarca);
+        $consultaMarca = $mysqli->query($queryMarca);
         $mensaje = "Se registro correctamente";
     }elseif($modo === "mod"){
         $idMarca = filter_input(INPUT_POST, "idMarca");
-        $consulta = mysql_query("UPDATE marca SET descripcion = '".$nombre."' where id_marca = ".$idMarca.";" );
+        $queryActualizar="UPDATE marca SET descripcion = '".$nombre."' where id_marca = ".$idMarca.";";
+        $consulta = $mysqli->query($queryActualizar); 
         $mensaje = "Se actualizo correctamente";
     }else{
         $mensaje = "Error, comuniquese con el administrador";
