@@ -1,5 +1,4 @@
 <?php
-
 require_once '../Conexion2.php';
 require_once '../DetalleComponente.class.php';
 session_start();
@@ -16,9 +15,9 @@ foreach ($vectorMaquinas as $maquina) {
         if ($row = $resultado->fetch_assoc()) {
             $numero = $row["maximo"] + 1;
         }
-       // echo $numero . "</br>";
+        // echo $numero . "</br>";
         $query10 = "INSERT INTO Componente(id_componente,id_tipo_componente,id_marca,anio_adquisicion,mes_adquisicion,id_proveedor,id_sistema_informatico,baja) values(" . $numero . ", " . $vectorComponente["idTipoComponente"] . ", " . $vectorComponente["marca"] . ", " . $vectorComponente["anio"] . ", " . $vectorComponente["mes"] . ",null, " . $maquina . ", 0)";
-       // echo $query10 . "</br></br></br>";
+        // echo $query10 . "</br></br></br>";
 
         if ($mysqli->query($query10) === TRUE) {
             echo "nuevo maquina insertada " . $mysqli->insert_id;
@@ -38,8 +37,9 @@ foreach ($vectorMaquinas as $maquina) {
                 $valor = "null";
                 $valorAlfa = "null";
 
-                    $valor = $detalle->getValor();
+                $valor = $detalle->getValor();
                 if ($detalle->getValor() != "") {
+                    
                 }
                 if ($detalle->getValor_alfanumerico() != "") {
                     $valorAlfa = $detalle->getValor_alfanumerico();
@@ -51,7 +51,7 @@ foreach ($vectorMaquinas as $maquina) {
                         . "values (" . $numerodetalle . ", " . $numero . ", " . $detalle->getId_descripcion()
                         . "," . $valor . ", " . $valorAlfa . ", "
                         . $detalle->getId_unidad_medida() . ")";
-             //   echo $query11 . "</br>";
+                //   echo $query11 . "</br>";
                 if ($mysqli->query($query11) === TRUE) {
                     echo "detalle de la  maquina insertada " . $mysqli->insert_id;
                 } else {
@@ -93,7 +93,7 @@ $mysqli->close();
                         </li>
                         <table>
                             <tr>
-                                
+
                                 <td colspan="2">
                                     <form action="../index.php">
                                         <button name="volver" id="volver" class="submit">Volver Inicio</button>
@@ -106,6 +106,6 @@ $mysqli->close();
 
                     </div>
                     <?php include_once '../foot.php'; ?>
-     </div>
-    </body>
-   </html>
+                </div>
+                </body>
+                </html>

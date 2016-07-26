@@ -12,14 +12,15 @@
  * @author Leonardo
  */
 class DetalleComponente {
+
     private $id_detalle;
     private $id_componente;
     private $id_descripcion;
     private $valor;
     private $valor_alfanumerico;
     private $id_unidad_medida;
-    
-    public function __constructor(){
+
+    public function __constructor() {
         $this->id_detalle = NULL;
         $this->id_componente = NULL;
         $this->id_descripcion = NULL;
@@ -27,22 +28,24 @@ class DetalleComponente {
         $this->valor_alfanumerico = "";
         $this->id_unidad_medida = NULL;
     }
-    /*public function __constructorValor($valor){
-        $this->id_detalle = NULL;
-        $this->id_componente = NULL;
-        $this->id_descripcion = NULL;
-        $this->valor = $valor;
-        $this->valor_alfanumerico = "";
-        $this->id_unidad_medida = NULL;
-    }
-    public function __constructorValorAlfanumerico($valorAlfa){
-        $this->id_detalle = NULL;
-        $this->id_componente = NULL;
-        $this->id_descripcion = NULL;
-        $this->valor = "";
-        $this->valor_alfanumerico = $valorAlfa;
-        $this->id_unidad_medida = NULL;
-    }*/
+
+    /* public function __constructorValor($valor){
+      $this->id_detalle = NULL;
+      $this->id_componente = NULL;
+      $this->id_descripcion = NULL;
+      $this->valor = $valor;
+      $this->valor_alfanumerico = "";
+      $this->id_unidad_medida = NULL;
+      }
+      public function __constructorValorAlfanumerico($valorAlfa){
+      $this->id_detalle = NULL;
+      $this->id_componente = NULL;
+      $this->id_descripcion = NULL;
+      $this->valor = "";
+      $this->valor_alfanumerico = $valorAlfa;
+      $this->id_unidad_medida = NULL;
+      } */
+
     function getId_detalle() {
         return $this->id_detalle;
     }
@@ -66,6 +69,7 @@ class DetalleComponente {
     function getId_unidad_medida() {
         return $this->id_unidad_medida;
     }
+
     function setId_detalle($id_detalle) {
         $this->id_detalle = $id_detalle;
     }
@@ -89,6 +93,5 @@ class DetalleComponente {
     function setId_unidad_medida($id_unidad_medida) {
         $this->id_unidad_medida = $id_unidad_medida;
     }
-
 
 }

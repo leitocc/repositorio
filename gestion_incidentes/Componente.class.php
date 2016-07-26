@@ -12,6 +12,7 @@
  * @author Leonardo
  */
 class Componente {
+
     private $id_componente;
     private $tipo_componente;
     private $descripcion;
@@ -24,8 +25,8 @@ class Componente {
     private $fecha_instalacion;
     private $baja;
     private $fecha_baja;
-    
-    function __construct(){
+
+    function __construct() {
         $this->id_componente = NULL;
         $this->tipo_componente = NULL;
         $this->descripcion = "";
@@ -40,8 +41,8 @@ class Componente {
         $this->baja = NULL;
         $this->fecha_baja = NULL;
     }
-    
-    function __construct2($id, $modelo, $anio, $mes, $patrimonio, $serie){
+
+    function __construct2($id, $modelo, $anio, $mes, $patrimonio, $serie) {
         $this->id_componente = $id;
         $this->tipo_componente = NULL;
         $this->descripcion = $modelo;
@@ -55,6 +56,7 @@ class Componente {
         $this->baja = NULL;
         $this->fecha_baja = NULL;
     }
+
     function getId_componente() {
         return $this->id_componente;
     }
@@ -102,6 +104,7 @@ class Componente {
     function getFecha_baja() {
         return $this->fecha_baja;
     }
+
     function setId_componente($id_componente) {
         $this->id_componente = $id_componente;
     }
@@ -149,6 +152,5 @@ class Componente {
     function setFecha_baja($fecha_baja) {
         $this->fecha_baja = $fecha_baja;
     }
-
 
 }

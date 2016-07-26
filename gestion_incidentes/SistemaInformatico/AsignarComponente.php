@@ -225,7 +225,7 @@ $_SESSION['Detalles'] = $vectorDetalles;
                             $resultado->free();
                             print '</tr></table></div>';
                             print '<div id="sistemaInformatico"></div>';
-                            print '<button class="submit" name="asignar" id="asignar">Asignar</button><button class="submit" name="volver" id="Volver">Volver</button>';
+                            print '<button class="submit" name="volver" id="Volver">Volver</button><button class="submit" name="asignar" id="asignar">Asignar</button>';
                             ?>
                         </form>
                     </div>

@@ -1,10 +1,10 @@
 <div id="footer">
     <div class="left">&copy; 2015 .: Departamento de Sistemas - Laboratorio de Sistemas :. <span class="text-separator">&rarr;</span>
-        <?php if(isset($_SESSION['usuario'])){?>
-        <a href="/incidentes/index.php">Inicio</a><span class="text-separator">|</span> 
-        <a href="/incidentes/SistemaInformatico/PrincipalSistemaInformatico.php">Sistemas Informáticos</a><span class="text-separator">|</span> 
-        <a href="/incidentes/Incidentes/InicioIncidentes.php">Incidentes</a><span class="text-separator">|</span> 
-        <?php }?>
+        <?php if (isset($_SESSION['usuario'])) { ?>
+            <a href="/incidentes/index.php">Inicio</a><span class="text-separator">|</span> 
+            <a href="/incidentes/SistemaInformatico/PrincipalSistemaInformatico.php">Sistemas Informáticos</a><span class="text-separator">|</span> 
+            <a href="/incidentes/Incidentes/InicioIncidentes.php">Incidentes</a><span class="text-separator">|</span> 
+        <?php } ?>
     </div>
     <div class="clearer">&nbsp;</div>
 </div>

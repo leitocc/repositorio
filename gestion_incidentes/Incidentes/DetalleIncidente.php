@@ -48,7 +48,7 @@ $incidente = $buscarIncidentes->fetch_assoc();
         <link rel="stylesheet" type="text/css" href="/incidentes/css/jquery-ui.css" />
         <link rel="stylesheet" type="text/css" href="/incidentes/css/jquery.datetimepicker.css" />
         <script type="text/javascript">
-            function quitarComponente(index){
+            function quitarComponente(index) {
                 $.ajax({
                     url: "/incidentes/Incidentes/ajax/tablaComponentesAfectados.php",
                     type: "POST",
@@ -74,8 +74,8 @@ $incidente = $buscarIncidentes->fetch_assoc();
                     $.ajax({
                         url: "/incidentes/Incidentes/ajax/tablaComponentesAfectados.php",
                         type: "POST",
-                        data: "tipoComponente=" + $("#tipoComponente").val() + 
-                              "&accion=" + $("#accion").val(),
+                        data: "tipoComponente=" + $("#tipoComponente").val() +
+                                "&accion=" + $("#accion").val(),
                         success: function (opciones) {
                             $("#tablaCA").html(opciones).show("slow");
                         }
@@ -146,8 +146,8 @@ $incidente = $buscarIncidentes->fetch_assoc();
                          }*/
                     }
                 });
-                
-                
+
+
 //                function verificarComponentes() {
 //                    var ban = false;
 //                    var componentes = document.getElementsByClassName("componentes");
@@ -171,7 +171,7 @@ $incidente = $buscarIncidentes->fetch_assoc();
 //                    }
 //                    return ban;
 //                }
-                
+
             });
 //            function verificarFechas() {
 //                var hinicio = $("#hinicio").val() + "";
@@ -499,7 +499,7 @@ $incidente = $buscarIncidentes->fetch_assoc();
                                                 INNER JOIN tipo_componente TC ON C.id_tipo_componente = TC.id_tipo_componente
                                                 WHERE SI.id_sistema_informatico = " . $incidente['si'];
                                                         //echo $componentesSI."</br>";
-                                                        
+
                                                         print '<select name="tipoComponente" id="tipoComponente" required>';
                                                         print '<option value="">Seleccione...</option>';
                                                         $buscarComponenteSI = $mysqli->query($qComponentesSI);
@@ -532,81 +532,81 @@ $incidente = $buscarIncidentes->fetch_assoc();
                                     </fieldset>
                                     <!----------------------------------------------------------------------------------------------------------------------------->
                                     <?php /*
-                                    <fieldset><legend>Componente</legend>
-                                        <div style="float: left; width: 750px">
-                                            <?php
-                                            $qTipoComponente = "SELECT TC.id_tipo_componente AS id, TC.descripcion AS nombre FROM tipo_componente TC";
-                                            $buscarTC = $mysqli->query($qTipoComponente);
-                                            if ($buscarTC) {
+                                      <fieldset><legend>Componente</legend>
+                                      <div style="float: left; width: 750px">
+                                      <?php
+                                      $qTipoComponente = "SELECT TC.id_tipo_componente AS id, TC.descripcion AS nombre FROM tipo_componente TC";
+                                      $buscarTC = $mysqli->query($qTipoComponente);
+                                      if ($buscarTC) {
 
-//                                            $query1 = mysql_query($consulta);
-//                                            if (mysql_errno() == 0) {
-                                                $qComponentesSI = "SELECT TC.id_tipo_componente AS id, TC.descripcion AS nombre 
-                                                FROM sistema_informatico SI 
-                                                INNER JOIN componente C ON C.id_sistema_informatico = SI.id_sistema_informatico
-                                                INNER JOIN tipo_componente TC ON C.id_tipo_componente = TC.id_tipo_componente
-                                                WHERE SI.id_sistema_informatico = " . $incidente['si'];
-                                                //echo $componentesSI."</br>";
+                                      //                                            $query1 = mysql_query($consulta);
+                                      //                                            if (mysql_errno() == 0) {
+                                      $qComponentesSI = "SELECT TC.id_tipo_componente AS id, TC.descripcion AS nombre
+                                      FROM sistema_informatico SI
+                                      INNER JOIN componente C ON C.id_sistema_informatico = SI.id_sistema_informatico
+                                      INNER JOIN tipo_componente TC ON C.id_tipo_componente = TC.id_tipo_componente
+                                      WHERE SI.id_sistema_informatico = " . $incidente['si'];
+                                      //echo $componentesSI."</br>";
 
-                                                $buscarComponenteSI = $mysqli->query($qComponentesSI);
-                                                while ($rowSI = $buscarComponenteSI->fetch_assoc()) {
-                                                    $compSI[] = $rowSI['nombre'];
-                                                }
+                                      $buscarComponenteSI = $mysqli->query($qComponentesSI);
+                                      while ($rowSI = $buscarComponenteSI->fetch_assoc()) {
+                                      $compSI[] = $rowSI['nombre'];
+                                      }
 
-//                                                $query2 = mysql_query($componentesSI);
-//                                                while ($rowSI = mysql_fetch_assoc($query2)) {
-//                                                    $compSI[] = $rowSI['nombre'];
-//                                                }
-                                                //echo print_r($compSI)."</br>";
+                                      //                                                $query2 = mysql_query($componentesSI);
+                                      //                                                while ($rowSI = mysql_fetch_assoc($query2)) {
+                                      //                                                    $compSI[] = $rowSI['nombre'];
+                                      //                                                }
+                                      //echo print_r($compSI)."</br>";
 
-                                                while ($row = $buscarTC->fetch_assoc()) {
-
-
-//                                                while ($row = mysql_fetch_array($query1)) {
-                                                    //echo print_r($row['nombre'])."</br>";
-                                                    if (!empty($compSI) && in_array($row['nombre'], $compSI)) {
-                                                        ?>
-                                                        <div style="float: left; height: 30px"><input type="checkbox" name="componente[<?php echo $row['id'] ?>]" id="componente[<?php echo $row['id'] ?>]" value="<?php echo $row['id'] ?>" class="componentes"/>
-                                                            <label for="componente[<?php echo $row['id'] ?>]"><?php echo $row['nombre'] ?></label><br/></div>
-                                                    <?php } else { ?>
-                                                        <div style="float: left; height: 30px"><input type="checkbox" name="componente[<?php echo $row['id'] ?>]" id="componente[<?php echo $row['id'] ?>]" value="<?php echo $row['id'] ?>" disabled="true"/><label for="componente[<?php echo $row['id'] ?>]" style="color: red;"><?php echo $row['nombre'] ?></label><br/></div>
-                                                        <?php
-                                                    }
-                                                }
-                                            }
-                                            ?>
-                                            <div><input type="checkbox" name="componente0" id="comp0" value="0" class="componentes" style="height: 30px"/><label for="comp0">Ninguno</label></div>
-                                        </div>
-                                        <div><button class="submitComponente" align="left" type="button" name="agregarComponente" id="agregarComponente">Cargar Componente</button></div>
-                                        <div style="clear: both;"><p style="color: red; font-size: 13px">(**) Los componentes en ROJO no se encuentran cargados en el sistema</p></div>
-                                    </fieldset>
+                                      while ($row = $buscarTC->fetch_assoc()) {
 
 
-                                    <fieldset><legend>Descripción</legend>
-                                        <textarea id="descripcion" name="descripcionInterv" id="descripcionInterv" value="" cols="80" rows="4" required></textarea>
-                                    </fieldset>
+                                      //                                                while ($row = mysql_fetch_array($query1)) {
+                                      //echo print_r($row['nombre'])."</br>";
+                                      if (!empty($compSI) && in_array($row['nombre'], $compSI)) {
+                                      ?>
+                                      <div style="float: left; height: 30px"><input type="checkbox" name="componente[<?php echo $row['id'] ?>]" id="componente[<?php echo $row['id'] ?>]" value="<?php echo $row['id'] ?>" class="componentes"/>
+                                      <label for="componente[<?php echo $row['id'] ?>]"><?php echo $row['nombre'] ?></label><br/></div>
+                                      <?php } else { ?>
+                                      <div style="float: left; height: 30px"><input type="checkbox" name="componente[<?php echo $row['id'] ?>]" id="componente[<?php echo $row['id'] ?>]" value="<?php echo $row['id'] ?>" disabled="true"/><label for="componente[<?php echo $row['id'] ?>]" style="color: red;"><?php echo $row['nombre'] ?></label><br/></div>
+                                      <?php
+                                      }
+                                      }
+                                      }
+                                      ?>
+                                      <div><input type="checkbox" name="componente0" id="comp0" value="0" class="componentes" style="height: 30px"/><label for="comp0">Ninguno</label></div>
+                                      </div>
+                                      <div><button class="submitComponente" align="left" type="button" name="agregarComponente" id="agregarComponente">Cargar Componente</button></div>
+                                      <div style="clear: both;"><p style="color: red; font-size: 13px">(**) Los componentes en ROJO no se encuentran cargados en el sistema</p></div>
+                                      </fieldset>
 
-                                    <fieldset><legend>Acción correctiva</legend>
-                                        <div style="width: 750px;">
-                                            <?php
-                                            $qConsultaAccion = "SELECT AC.id_accion AS id, AC.nombre FROM accion_correctiva AC";
-                                            $buscarAcciones = $mysqli->query($qComponentesSI);
-                                            if ($buscarAcciones) {
-                                                while ($row = $buscarAcciones->fetch_assoc()) {
 
-//                                            $query1 = mysql_query($consulta);
-//                                            if (mysql_errno() == 0) {
-//                                                while ($row = mysql_fetch_array($query1)) {
-                                                    ?>
-                                                    <div style="float: left; height: 50px;"><input type="checkbox" name="accion<?php echo $row['id'] ?>" id="accion<?php echo $row['id'] ?>" value="<?php echo $row['id'] ?>" class="acciones"/><label for="accion<?php echo $row['id'] ?>"><?php echo $row['nombre'] ?></label><br/></div>
+                                      <fieldset><legend>Descripción</legend>
+                                      <textarea id="descripcion" name="descripcionInterv" id="descripcionInterv" value="" cols="80" rows="4" required></textarea>
+                                      </fieldset>
 
-                                                    <?php
-                                                }
-                                            }
-                                            ?>
-                                        </div>
-                                    </fieldset>
-                                    */ ?>
+                                      <fieldset><legend>Acción correctiva</legend>
+                                      <div style="width: 750px;">
+                                      <?php
+                                      $qConsultaAccion = "SELECT AC.id_accion AS id, AC.nombre FROM accion_correctiva AC";
+                                      $buscarAcciones = $mysqli->query($qComponentesSI);
+                                      if ($buscarAcciones) {
+                                      while ($row = $buscarAcciones->fetch_assoc()) {
+
+                                      //                                            $query1 = mysql_query($consulta);
+                                      //                                            if (mysql_errno() == 0) {
+                                      //                                                while ($row = mysql_fetch_array($query1)) {
+                                      ?>
+                                      <div style="float: left; height: 50px;"><input type="checkbox" name="accion<?php echo $row['id'] ?>" id="accion<?php echo $row['id'] ?>" value="<?php echo $row['id'] ?>" class="acciones"/><label for="accion<?php echo $row['id'] ?>"><?php echo $row['nombre'] ?></label><br/></div>
+
+                                      <?php
+                                      }
+                                      }
+                                      ?>
+                                      </div>
+                                      </fieldset>
+                                     */ ?>
                                     <!----------------------------------------------------------------------------------------------------------------------------->
                                     <!----------------------------------------------------------------------------------------------------------------------------->
                                     <!--<div><button  type="button" name="agregarComponente" id="agregarComponente">Agregar</button></div>-->
@@ -643,8 +643,8 @@ $incidente = $buscarIncidentes->fetch_assoc();
                                     <input type="hidden" value="<?php echo $id ?>" name="idIncidente"/>
                                     <input type="hidden" value="<?php echo $incidente['si'] ?>" name="idSI"/>
                                     <!-- Por ultimo los botones-->
-                                    <button class="submit" name="registrar" type="submit" id="modificar">Registrar</button>
                                     <button class="submit" name="cancelar" id="cancelar">Cancelar</button>
+                                    <button class="submit" name="registrar" type="submit" id="modificar">Registrar</button>
                                 <?php } else { ?>
                                     <h4>Estado del Incidente: <?php echo $incidente['estado'] ?></h4>
                                     <button class="submit" name="volver" id="volver">Volver</button>

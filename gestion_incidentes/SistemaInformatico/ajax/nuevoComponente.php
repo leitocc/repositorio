@@ -87,8 +87,8 @@ switch ($idTC) {
         $resultado->free();
         break;
     //teclado
-        case 3:
-          print '<tr><td>Tipo de conexion (*)</td>';
+    case 3:
+        print '<tr><td>Tipo de conexion (*)</td>';
         $query = "select * from tipo_conexion";
         $resultado = $mysqli->query($query);
         print '<td><select name="conexion" id="conexion" required>';
@@ -150,10 +150,8 @@ switch ($idTC) {
         print'</tr>';
         break;
     //Placa Audio
-            
-    
     //lectora    
-    case 11: 
+    case 11:
         print '<tr><td>Tipo de Lectora (*)</td>';
         $query = "select * from tipo_lectora";
         $resultado = $mysqli->query($query);
@@ -185,5 +183,6 @@ switch ($idTC) {
 }
 
 print '</table>';
-print '<button class="submit" name="siguiente2" id="siguiente2">Siguiente</button><button class="submit" name="volver2" id="volver2" onclick="location.assign(\'PrincipalSistemaInformatico.php\');">Volver</button>';
+print '<button class="submit" name="volver2" id="volver2" onclick="location.assign(\'PrincipalSistemaInformatico.php\');">Volver</button>';
+print '<button class="submit" name="siguiente2" id="siguiente2">Siguiente</button>';
 //print '</div>';

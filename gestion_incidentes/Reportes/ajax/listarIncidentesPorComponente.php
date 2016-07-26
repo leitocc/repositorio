@@ -62,7 +62,7 @@ elseif ($mysqli->affected_rows != 0) {
     </table>
     <?php
     print '<h4>Total: ' . $mysqli->affected_rows . ' registros</h4>';
-}else{
+} else {
     print '<h5>No hay registros que afecten el componente</h5>';
 }
 $resultado->free();

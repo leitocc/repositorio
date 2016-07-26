@@ -1,8 +1,11 @@
 <?php
+
 require_once '../formatoFecha.class.php';
-function paginaError($nroError){
-    header('Location: /incidentes/error.php?error='.$nroError.''); 
+
+function paginaError($nroError) {
+    header('Location: /incidentes/error.php?error=' . $nroError . '');
 }
+
 #Validacion artesanal
 
 if ($_REQUEST['nroIncidente'] != "") {
@@ -76,7 +79,7 @@ if ($_REQUEST['descripcion'] != '') {
 if (isset($_REQUEST['preguntaAct']) && $_REQUEST['preguntaAct'] != '') {
     $preguntaAct = $_REQUEST['preguntaAct'];
     //echo "Pregunta vale: ".$preguntaAct."<br/>";
-    if($preguntaAct == "1"){ //0: No - 1: Si
+    if ($preguntaAct == "1") { //0: No - 1: Si
         //echo "ENTRO!!!";
         if ($_REQUEST['nombreAct'] != '') {
             $nombreAct = $_REQUEST['nombreAct'];
@@ -99,13 +102,13 @@ if (isset($_REQUEST['preguntaAct']) && $_REQUEST['preguntaAct'] != '') {
             $responsable2 = "NULL";
         }
         $idActividad['id'] = "si";
-    }else{
+    } else {
         //echo "NO ENTRO NADA!!!";
         $idActividad['id'] = "NULL";
         //$nombreAct= NULL;
-        /*$nivel=NULL;
-        $responsable1=NULL;
-        $responsable2=NULL;*/
+        /* $nivel=NULL;
+          $responsable1=NULL;
+          $responsable2=NULL; */
     }
 } else {
     paginaError(1);
@@ -114,28 +117,28 @@ if (isset($_REQUEST['preguntaAct']) && $_REQUEST['preguntaAct'] != '') {
 
 require_once '../Conexion.php';
 //mysqli_begin_transaction();
-$consultaNroInc ="SELECT MAX(I.id_incidente) AS id
+$consultaNroInc = "SELECT MAX(I.id_incidente) AS id
                   FROM incidente I";
 $query1 = mysql_query($consultaNroInc);
-if(mysql_errno() == 0){
+if (mysql_errno() == 0) {
     $id = mysql_fetch_array($query1);
-}else{
+} else {
     $id['id'] = 0;
 }
-$id['id']++;
+$id['id'] ++;
 
 //primero debo insertar la actividad si es que hubo alguna
 //echo $idActividad['id'];
-if($idActividad['id'] != "NULL"){
-    $consultaIdAct ="SELECT MAX(A.id_actividad) AS id
+if ($idActividad['id'] != "NULL") {
+    $consultaIdAct = "SELECT MAX(A.id_actividad) AS id
                      FROM actividad A";
     $query2 = mysql_query($consultaIdAct);
-    if(mysql_errno() == 0){
+    if (mysql_errno() == 0) {
         $idActividad = mysql_fetch_array($query2);
-    }else{
+    } else {
         $idActividad['id'] = 0;
     }
-    $idActividad['id']++;
+    $idActividad['id'] ++;
     $insertQuery = "INSERT INTO `actividad`
                     (`id_actividad`,
                     `nombre_actividad`,
@@ -143,13 +146,13 @@ if($idActividad['id'] != "NULL"){
                     `responsable1`,
                     `responsable2`)
                     VALUES
-                    (".$idActividad['id'].",
-                    \"".$nombreAct."\",
-                    ".$nivel.",
-                    \"".$responsable1."\",
-                    \"".$responsable2."\")";
+                    (" . $idActividad['id'] . ",
+                    \"" . $nombreAct . "\",
+                    " . $nivel . ",
+                    \"" . $responsable1 . "\",
+                    \"" . $responsable2 . "\")";
     $insertActividad = mysql_query($insertQuery);
-    echo "Actividad: ".$insertQuery."<br/><br/>";
+    echo "Actividad: " . $insertQuery . "<br/><br/>";
 }
 
 
@@ -169,23 +172,23 @@ $insertQuery = "INSERT INTO incidente
 `id_persona_reporto`,
 `id_rol_persona_reporto`)
 VALUES
-(".$id['id'].",
-".$si.",
-\"".$fecha."\",
-".$turno.",
-".$sala.",
-\"".$descripcion."\",
-".$causa.",
+(" . $id['id'] . ",
+" . $si . ",
+\"" . $fecha . "\",
+" . $turno . ",
+" . $sala . ",
+\"" . $descripcion . "\",
+" . $causa . ",
 1,
-".$idActividad['id'].",
-".$reporto.",
-".$area.")";
+" . $idActividad['id'] . ",
+" . $reporto . ",
+" . $area . ")";
 $insert = mysql_query($insertQuery);
-echo "Incidentes: ".$insertQuery;
+echo "Incidentes: " . $insertQuery;
 //mysqli_commit($insert);
-/**/if(mysql_errno() == 0){
-   header('Location: /incidentes/Incidentes/InicioIncidentes.php?mjs=1'); 
-}else{
-   header('Location: /incidentes/Incidentes/InicioIncidentes.php?mjs=0'); 
+/**/if (mysql_errno() == 0) {
+    header('Location: /incidentes/Incidentes/InicioIncidentes.php?mjs=1');
+} else {
+    header('Location: /incidentes/Incidentes/InicioIncidentes.php?mjs=0');
 }/**/
 

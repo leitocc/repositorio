@@ -11,45 +11,45 @@ include_once '../limpiarSesion.php';
         <title>Incidentes</title>
         <link rel="stylesheet" type="text/css" href="/incidentes/css/estilo.css" />
         <script type="text/javascript" src="/incidentes/js/jquery-1.11.1.js"></script>
-        <?php 
+        <?php
         //echo "Pruebo y .. ";
-        if(isset($_REQUEST['mjs']) && $_REQUEST['mjs'] != ''){
+        if (isset($_REQUEST['mjs']) && $_REQUEST['mjs'] != '') {
             //echo "Entro, ";
             $codigo = $_REQUEST['mjs'];
             //echo "codigo: ".$codigo;
-            switch($codigo){
-                case 0:{
-                    $msj = "Error. Operación fallida";
-                    break;
-                }
-                case 1:{
-                    $msj = "Operación realizada con éxito";
-                    break;
-                }
-                default :{
-                    $msj = "";
-                    break;
-                }
+            switch ($codigo) {
+                case 0: {
+                        $msj = "Error. Operación fallida";
+                        break;
+                    }
+                case 1: {
+                        $msj = "Operación realizada con éxito";
+                        break;
+                    }
+                default : {
+                        $msj = "";
+                        break;
+                    }
             }
             //echo "msj: ".$msj;
-            if($msj != ""){
-            ?>
-            <script>
-                $(document).ready(function() {
-                    alert("<?php echo $msj?>");
-                });
-            </script>
-            <?php
+            if ($msj != "") {
+                ?>
+                <script>
+                    $(document).ready(function () {
+                        alert("<?php echo $msj ?>");
+                    });
+                </script>
+                <?php
             }
         }
         ?>
     </head>
     <body id="top">
-        <?php include_once '../master.php';?>
+        <?php include_once '../master.php'; ?>
         <div id="site">
             <div class="center-wrapper">
-                <?php include_once '../menu.php';?>
-                
+                <?php include_once '../menu.php'; ?>
+
                 <div class="main">
                     <div class="post">
                         <div style="clear: both">
@@ -59,7 +59,7 @@ include_once '../limpiarSesion.php';
                         </div>
                     </div>
                 </div>
-                <?php include_once './../foot.php';?>
+                <?php include_once './../foot.php'; ?>
             </div>
         </div>
     </body>

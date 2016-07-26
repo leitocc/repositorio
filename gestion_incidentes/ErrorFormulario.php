@@ -6,22 +6,22 @@
         <link rel="stylesheet" type="text/css" href="/incidentes/css/estilo.css" />
     </head>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             stop(2000);
             history.back(2);
         });
     </script>
     <body id="top">
-        <?php include_once '../../master.php';?>
+        <?php include_once '../../master.php'; ?>
         <div id="site">
             <div class="center-wrapper">
-                <?php include_once '../../menu.php';?>
+                <?php include_once '../../menu.php'; ?>
                 <div class="main">
                     <div class="post">
                         <li class="no_lista"><h2>Error en el formulario. Redireccionando...</h2></li>
                     </div>
                 </div>
-                <?php include_once '../../foot.php';?>
+                <?php include_once '../../foot.php'; ?>
             </div>
         </div>
     </body>

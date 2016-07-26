@@ -4,21 +4,18 @@ session_start();
 echo "entre<br/>";
 $quitar = filter_input(INPUT_POST, "quitar");
 print $quitar;
-if(empty($quitar) && !is_numeric($quitar)){
+if (empty($quitar) && !is_numeric($quitar)) {
     echo 'agrega';
     $tipoComponente = filter_input(INPUT_POST, "tipoComponente");
     $accion = filter_input(INPUT_POST, "accion");
 
     //$componentes = $_SESSION["componentes"];
     print '<br/>';
-    $_SESSION["componentes"][] = array("tipo"=>$tipoComponente, "accion"=>$accion);
+    $_SESSION["componentes"][] = array("tipo" => $tipoComponente, "accion" => $accion);
     //print_r($_SESSION["componentes"]);
-}else{
+} else {
     unset($_SESSION["componentes"][$quitar]);
-    
 }
-    
-
 ?>
 
 <table class="listado2">
@@ -30,10 +27,10 @@ if(empty($quitar) && !is_numeric($quitar)){
         </tr>
     </thead>
     <tbody>
-        <?php
-        $index = 0;
-        foreach ($_SESSION["componentes"] as $comp) {
-            ?>
+<?php
+$index = 0;
+foreach ($_SESSION["componentes"] as $comp) {
+    ?>
             <tr>
                 <td><?php echo $comp["tipo"] ?></td>
                 <td><?php echo $comp["accion"] ?></td>
@@ -41,11 +38,12 @@ if(empty($quitar) && !is_numeric($quitar)){
                     <a onclick="javascript:quitarComponente(<?php echo $index ?>);">Quitar</a>
                 </td>
             </tr>
-        <?php $index++; }/* ?>
-        <tr>
-            <td><?php echo $tipoComponente ?></td>
-            <td><?php echo $accion ?></td>
-            <td><a href="tablaComponentesAfectados.php?quitar=<?php echo $index ?>">Quitar</a></td>
-        </tr>*/?>
+    <?php $index++;
+}/* ?>
+  <tr>
+  <td><?php echo $tipoComponente ?></td>
+  <td><?php echo $accion ?></td>
+  <td><a href="tablaComponentesAfectados.php?quitar=<?php echo $index ?>">Quitar</a></td>
+  </tr> */ ?>
     </tbody>
 </table>

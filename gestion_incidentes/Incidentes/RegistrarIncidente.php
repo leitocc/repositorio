@@ -112,7 +112,7 @@ include_once '../verificarPermisos.php';
                                             $consultaNroInc = "SELECT MAX(I.id_incidente) AS id
                                             FROM incidente I";
                                             $resultado1 = $mysqli->query($consultaNroInc);
-                                            if ($row=$resultado1->fetch_assoc()) {
+                                            if ($row = $resultado1->fetch_assoc()) {
                                                 $id['id'] = $row["id"];
                                                 //echo "Entro y Id vale: ".$id['id']."<br/>";
                                             } else {
@@ -138,15 +138,15 @@ include_once '../verificarPermisos.php';
                                                 $consultaTurno = "SELECT T.nombre_turno AS nombre, T.id_turno AS id
                                                 FROM turno T";
                                                 //$query2 = mysql_query($consultaTurno);
-                                                $resultado2=$mysqli->query($consultaTurno);
+                                                $resultado2 = $mysqli->query($consultaTurno);
                                                 // if (mysql_errno() == 0) {
                                                 if ($resultado2) {
-                                                    
+
                                                     //while ($row = mysql_fetch_array($query2)) {
-                                                      while ($row = $resultado2->fetch_assoc()) {
+                                                    while ($row = $resultado2->fetch_assoc()) {
                                                         ?>
                                                         <option value ="<?php echo $row['id'] ?>"><?php echo $row['nombre'] ?></option>
-                                                    <?php
+                                                        <?php
                                                     }
                                                 }
                                                 ?>
@@ -168,13 +168,13 @@ include_once '../verificarPermisos.php';
                                                 $consultaInstitucion = "SELECT I.nombre, I.id_institucion AS id
                                                 FROM institucion I";
                                                 //$query3 = mysql_query($consultaInstitucion);
-                                                $resultado3=$mysqli->query($consultaInstitucion);
+                                                $resultado3 = $mysqli->query($consultaInstitucion);
                                                 if ($resultado3) {
                                                     //while ($row = mysql_fetch_array($query3)) {
                                                     while ($row = $resultado3->fetch_assoc()) {
                                                         ?>
                                                         <option value="<?php echo $row['id'] ?>" selected="true"><?php echo $row['nombre'] ?></option>
-                                                    <?php
+                                                        <?php
                                                     }
                                                 }
                                                 ?>
@@ -193,7 +193,7 @@ include_once '../verificarPermisos.php';
                                                     while ($row = $resultado4->fetch_assoc()) {
                                                         ?>
                                                         <option value="<?php echo $row['id'] ?>" selected="true"><?php echo $row['nombre'] ?></option>
-                                                    <?php
+                                                        <?php
                                                     }
                                                 }
                                                 ?>
@@ -209,16 +209,16 @@ include_once '../verificarPermisos.php';
                                                 $consultaSala = "SELECT S.nombre, S.id_sala AS id
                                                 FROM sala S";
                                                 //$query5 = mysql_query($consultaSala);
-                                                $resultado5=$mysqli->query($consultaSala);
+                                                $resultado5 = $mysqli->query($consultaSala);
                                                 if ($resultado5) {
                                                     //while ($row = mysql_fetch_array($query5)) {
-                                                     while ($row = $resultado5->fetch_assoc()) {
+                                                    while ($row = $resultado5->fetch_assoc()) {
                                                         ?>
                                                         <option value="<?php echo $row['id'] ?>"><?php echo $row['nombre'] ?></option>
-    <?php
-    }
-}
-?>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
                                             </select>
                                         </td>
                                         <td>*Sistema Informatico:</td>
@@ -247,10 +247,10 @@ include_once '../verificarPermisos.php';
                                                     while ($row = $resultado6->fetch_assoc()) {
                                                         ?>
                                                         <option value="<?php echo $row['id'] ?>"><?php echo $row['descripcion'] ?></option>
-        <?php
-                                                            }
-                                                        }
-                                                        ?>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
                                             </select>
                                         </td>     
                                     </tr>
@@ -269,14 +269,14 @@ include_once '../verificarPermisos.php';
                                                 <?php
                                                 $consultaReporto = "SELECT P.apellido, P.nombre, P.id_persona AS id
                                                 FROM persona P INNER JOIN usuario U ON P.id_persona = U.id_persona 
-                                                AND U.usuario = \"" . $_SESSION['usuario'] ."\"";
-                                               // $query7 = mysql_query($consultaReporto);
+                                                AND U.usuario = \"" . $_SESSION['usuario'] . "\"";
+                                                // $query7 = mysql_query($consultaReporto);
                                                 $resultado7 = $mysqli->query($consultaReporto);
                                                 if ($resultado7) {
-                                                    while ($row =$resultado7->fetch_assoc()) {
+                                                    while ($row = $resultado7->fetch_assoc()) {
                                                         ?>
-                                                <option value="<?php echo $row['id'] ?>"><?php echo $row['apellido'] . ", " . $row['nombre'] ?></option>
-                                                    <?php
+                                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['apellido'] . ", " . $row['nombre'] ?></option>
+                                                        <?php
                                                     }
                                                 }
                                                 ?>
@@ -290,17 +290,17 @@ include_once '../verificarPermisos.php';
                                                 $consultaArea = "SELECT R.nombre, R.id_rol AS id
                                                 FROM rol R";
                                                 //$query8 = mysql_query($consultaArea);
-                                                $resultado8=$mysqli->query($consultaArea);
+                                                $resultado8 = $mysqli->query($consultaArea);
                                                 if ($resultado8) {
                                                     while ($row = $resultado8->fetch_assoc()) {
                                                         if ($row['nombre'] !== "Administrador" && $row['nombre'] !== "Admin" && $row['nombre'] !== "Administrator") {
                                                             ?>
                                                             <option value="<?php echo $row['id'] ?>"><?php echo $row['nombre'] ?></option>
                                                             <?php
-                                                                    }
-                                                                }
-                                                            }
-                                                            ?>
+                                                        }
+                                                    }
+                                                }
+                                                ?>
                                             </select>
                                         </td>
                                     </tr>
@@ -355,12 +355,12 @@ include_once '../verificarPermisos.php';
                                     </tr>
                                 </table>
                             </div>
-                            <button class="submit" name="registrar" type="submit" id="registrar">Registrar</button>
                             <button class="submit" type="submit" name="cancelar" id="cancelar">Cancelar</button>
+                            <button class="submit" name="registrar" type="submit" id="registrar">Registrar</button>
                         </form>
                     </div>
                 </div>
-<?php include_once './../foot.php'; ?>
+                <?php include_once './../foot.php'; ?>
             </div>
         </div>
     </body>

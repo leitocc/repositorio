@@ -10,16 +10,16 @@ include_once '../limpiarSesion.php';
         <meta charset="UTF-8">
         <title>Sistemas Informaticos</title>
         <link rel="stylesheet" type="text/css" href="/incidentes/css/estilo.css" />
-        <?php 
-            if(isset($_SESSION['mensaje'])){      
-                $mensaje = $_SESSION['mensaje'];
-            }else {
-                $mensaje = "";
-            }
+        <?php
+        if (isset($_SESSION['mensaje'])) {
+            $mensaje = $_SESSION['mensaje'];
+        } else {
+            $mensaje = "";
+        }
         ?>
         <script>
-            $(document).ready(function() {
-                var mensaje = "<?php echo $mensaje?>";
+            $(document).ready(function () {
+                var mensaje = "<?php echo $mensaje ?>";
                 if (mensaje !== "") {
                     alert(mensaje);
                 }
@@ -27,11 +27,11 @@ include_once '../limpiarSesion.php';
         </script>
     </head>
     <body id="top">
-        <?php include_once '../master.php';?>
+        <?php include_once '../master.php'; ?>
         <div id="site">
             <div class="center-wrapper">
-                <?php include_once '../menu.php';?>
-                
+                <?php include_once '../menu.php'; ?>
+
                 <div class="main">
                     <div class="post">
                         <div style="clear: both">
@@ -41,7 +41,7 @@ include_once '../limpiarSesion.php';
                         </div>
                     </div>
                 </div>
-                <?php include_once './../foot.php';?>
+                <?php include_once './../foot.php'; ?>
             </div>
         </div>
     </body>

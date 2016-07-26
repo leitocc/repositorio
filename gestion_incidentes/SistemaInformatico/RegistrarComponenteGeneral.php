@@ -32,7 +32,7 @@ require_once '../Conexion2.php';
                     }
                 }
             }
- 
+
             function volver(mievento) {
                 mievento.preventDefault();
                 location.assign('PrincipalSistemaInformatico.php');
@@ -92,8 +92,8 @@ require_once '../Conexion2.php';
                                 <table>
                                     <tr>
                                         <td colspan="2">
-                                            <button name="siguiente" id="siguiente" class="submit">Siguiente</button>
                                             <button name="volver" id="volver" class="submit">Volver</button>
+                                            <button name="siguiente" id="siguiente" class="submit">Siguiente</button>
                                         </td>
                                     </tr>
                                 </table>    
