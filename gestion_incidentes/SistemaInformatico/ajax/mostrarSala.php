@@ -11,7 +11,7 @@ require_once '../../Conexion2.php';
 <fieldset><legend>Componente</legend>
     <div style="float: left; width: 750px">
         <?php
-        $query = "SELECT SI.id_sistema_informatico AS ISI FROM Sistema_Informatico SI where SI.id_Sala = " . $idSala;
+        $query = "SELECT SI.id_sistema_informatico AS ISI FROM sistema_informatico SI where SI.id_Sala = " . $idSala;
         $resultado = $mysqli->query($query);
         while ($row = $resultado->fetch_assoc()) {
             ?>

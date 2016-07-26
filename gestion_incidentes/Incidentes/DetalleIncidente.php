@@ -47,8 +47,40 @@ $incidente = $buscarIncidentes->fetch_assoc();
         <link rel="stylesheet" type="text/css" href="/incidentes/css/estilo.css" />
         <link rel="stylesheet" type="text/css" href="/incidentes/css/jquery-ui.css" />
         <link rel="stylesheet" type="text/css" href="/incidentes/css/jquery.datetimepicker.css" />
-        <script>
+        <script type="text/javascript">
+            function quitarComponente(index){
+                $.ajax({
+                    url: "/incidentes/Incidentes/ajax/tablaComponentesAfectados.php",
+                    type: "POST",
+                    data: "quitar=" + index,
+                    success: function (opciones) {
+                        $("#tablaCA").html(opciones).show("slow");
+                    }
+                });
+            }
             $(document).ready(function () {
+                $("#tipoComponente").change(function (mievento) {
+                    $.ajax({
+                        url: "/incidentes/Incidentes/ajax/cargarAccionCorrectiva.php",
+                        type: "POST",
+                        data: "tipoComponente=" + $("#tipoComponente").val(),
+                        success: function (opciones) {
+                            $("#accion").html(opciones).show("slow");
+                        }
+                    });
+                });
+                $("#btnAgregar").click(function (mievento) {
+                    mievento.preventDefault();
+                    $.ajax({
+                        url: "/incidentes/Incidentes/ajax/tablaComponentesAfectados.php",
+                        type: "POST",
+                        data: "tipoComponente=" + $("#tipoComponente").val() + 
+                              "&accion=" + $("#accion").val(),
+                        success: function (opciones) {
+                            $("#tablaCA").html(opciones).show("slow");
+                        }
+                    });
+                });
                 $("#finicio").datepicker({
                     dateFormat: 'dd/mm/yy',
                     maxDate: "+0D",
@@ -114,57 +146,45 @@ $incidente = $buscarIncidentes->fetch_assoc();
                          }*/
                     }
                 });
-                function verificarComponentes() {
-                    var ban = false;
-                    var componentes = document.getElementsByClassName("componentes");
-                    for (var i = 0; i < componentes.length; i++) {
-                        if (componentes[i].checked) {
-                            ban = true;
-                            break;
-                        }
-                    }
-                    return ban;
-                }
-                ;
-                function verificarAcciones() {
-                    var ban = false;
-                    var acciones = document.getElementsByClassName("acciones");
-                    for (var i = 0; i < acciones.length; i++) {
-                        if (acciones[i].checked) {
-                            ban = true;
-                            break;
-                        }
-                    }
-                    return ban;
-                }
-                ;
-                function verificarFechas() {
-                    var hinicio = $("#hinicio").val() + "";
-                    var hfin = $("#hfin").val() + "";
-                    if ($("#finicio").val() === $("#ffin").val()) {
-                        if (hinicio >= hfin) {
-                            //alert("mal");
-                            return false;
-                        }
-                    }
-                    //alert("bien");
-                    return true;
-                }
                 
-                $("#tipoComponente[]").change(function (mievento) {
-                    mievento.preventDefault();
-                    alert("aidsfhsd");
-                    var ultimo = document.getElementById("tipoDocumento").lastElementChild;
-                    $.ajax({
-                        url: "/incidentes/Incidentes/cargarAccionCorrectiva.php",
-                        type: "POST",
-                        data: "tipoComponente=" + ultimo.value,
-                        success: function (opciones) {
-                            $("#accion").html(opciones).show("slow");
-                        }
-                    });
-                });
+                
+//                function verificarComponentes() {
+//                    var ban = false;
+//                    var componentes = document.getElementsByClassName("componentes");
+//                    for (var i = 0; i < componentes.length; i++) {
+//                        if (componentes[i].checked) {
+//                            ban = true;
+//                            break;
+//                        }
+//                    }
+//                    return ban;
+//                }
+//                
+//                function verificarAcciones() {
+//                    var ban = false;
+//                    var acciones = document.getElementsByClassName("acciones");
+//                    for (var i = 0; i < acciones.length; i++) {
+//                        if (acciones[i].checked) {
+//                            ban = true;
+//                            break;
+//                        }
+//                    }
+//                    return ban;
+//                }
+                
             });
+//            function verificarFechas() {
+//                var hinicio = $("#hinicio").val() + "";
+//                var hfin = $("#hfin").val() + "";
+//                if ($("#finicio").val() === $("#ffin").val()) {
+//                    if (hinicio >= hfin) {
+//                        //alert("mal");
+//                        return false;
+//                    }
+//                }
+//                //alert("bien");
+//                return true;
+//            }
         </script>
     </head>
     <body id="top">
@@ -480,7 +500,7 @@ $incidente = $buscarIncidentes->fetch_assoc();
                                                 WHERE SI.id_sistema_informatico = " . $incidente['si'];
                                                         //echo $componentesSI."</br>";
                                                         
-                                                        print '<select name="tipoComponente[0]" id="tipoComponente[0]" required>';
+                                                        print '<select name="tipoComponente" id="tipoComponente" required>';
                                                         print '<option value="">Seleccione...</option>';
                                                         $buscarComponenteSI = $mysqli->query($qComponentesSI);
                                                         if ($buscarComponenteSI) {
@@ -492,7 +512,7 @@ $incidente = $buscarIncidentes->fetch_assoc();
                                                         ?>
                                                     </td>
                                                     <td>
-                                                        <div><input type="checkbox" name="componente0" id="comp0" value="0" class="componentes" style="height: 30px"/><label for="comp0">Ninguno</label></div>
+                                                        <div><input type="checkbox" name="ninguno" id="ninguno" value="0" class="componentes" style="height: 30px"/><label for="comp0">Ninguno</label></div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -503,8 +523,12 @@ $incidente = $buscarIncidentes->fetch_assoc();
                                                         </select>
                                                     </td>
                                                 </tr>
+                                                <tr>
+                                                    <td colspan="2"><button id="btnAgregar" >Agregar</button></td>
+                                                </tr>
                                             </table>
                                         </div>
+                                        <div id="tablaCA"></div>
                                     </fieldset>
                                     <!----------------------------------------------------------------------------------------------------------------------------->
                                     <?php /*

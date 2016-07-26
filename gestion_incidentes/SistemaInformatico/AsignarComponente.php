@@ -169,7 +169,9 @@ $_SESSION['Detalles'] = $vectorDetalles;
             window.onload = function () {
                 document.getElementById("sala").onchange = function (e) {
                     var nrosala = document.getElementById('sala').value;
+                    alert(nrosala);
                     if (nrosala !== "") {
+                        alert("entre");
                         valida("http://localhost/incidentes/SistemaInformatico/ajax/mostrarSala.php");
                     } else {
                         document.getElementById('sistemaInformatico').innerHTML = "";
