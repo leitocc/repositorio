@@ -172,7 +172,7 @@ $_SESSION['Detalles'] = $vectorDetalles;
                     alert(nrosala);
                     if (nrosala !== "") {
                         alert("entre");
-                        valida("http://localhost/incidentes/SistemaInformatico/ajax/mostrarSala.php");
+                        valida("/incidentes/SistemaInformatico/ajax/mostrarSala.php");
                     } else {
                         document.getElementById('sistemaInformatico').innerHTML = "";
                     }

@@ -33,7 +33,7 @@ require_once '../Conexion2.php';
                 document.getElementById("tipoComponente").onchange = function (e) {
                     var tipoComponente = document.getElementById("tipoComponente").value;
                     if (tipoComponente !== "") {
-                        valida("http://localhost/incidentes/Reportes/ajax/listarIncidentesPorComponente.php");
+                        valida("/incidentes/Reportes/ajax/listarIncidentesPorComponente.php");
                     } else {
                         alert("Ingrese un tipo de componente");
                     }

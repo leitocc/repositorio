@@ -42,7 +42,7 @@ require_once '../Conexion2.php';
                 document.getElementById("siguiente").onclick = function (mievento) {
                     mievento.preventDefault();
                     if (document.getElementById("tipoComponente").value !== "") {
-                        valida("http://localhost/incidentes/SistemaInformatico/ajax/nuevoComponente.php");
+                        valida("/incidentes/SistemaInformatico/ajax/nuevoComponente.php");
                     } else {
                         alert("Ingrese un tipo de componente");
                     }
